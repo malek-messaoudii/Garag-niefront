@@ -1,0 +1,224 @@
+<app-navbar></app-navbar> <br/> 
+<div>
+    <div class="usersignup">
+        <h2 class="tyt"><b>Créer votre compte</b></h2>
+    </div> 
+    <br /> 
+    <br />
+    <div class="identification">
+        <div class="dov">
+            <input type="radio" name="personneType" value="client" (change)="handlePersonTypeChange($event)" class="radio-input" checked />
+            <label for="rb1"> Vous êtes un client ?</label>
+        </div>
+        <div class="dov">
+            <input type="radio" name="personneType" value="garagiste" (change)="handlePersonTypeChange($event)" class="radio-input" />
+            <label for="rb2"> Vous êtes un garagiste ?</label>
+        </div>
+    </div>
+  
+    <div class="toogle">
+        <div class="toggle-btn-group" *ngIf="selectedPersonType === 'client'">
+            <input type="radio" id="physique" name="personneCategory" value="physique" (change)="handlePersonCategoryChange($event)" checked>
+            <label for="physique" class="toggle-btn">Personne Physique</label>
+            <input type="radio" id="morale" name="personneCategory" value="morale" (change)="handlePersonCategoryChange($event)">
+            <label for="morale" class="toggle-btn">Personne Morale</label>
+        </div>
+       <br/> <br/>
+        <div *ngIf="isClientPhysiqueSelected()">
+            <form>
+                <div class="form-group">
+                    <label for="firstName">Nom : *</label>
+                    <input id="firstName" type="text" name="firstName" required placeholder="Entrer votre nom">
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Prénom : *</label>
+                    <input id="lastName" type="text" name="lastName" required placeholder="Entrer votre prénom">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Téléphone : * </label>
+                    <input id="phone" type="tel" name="phone" required placeholder="Entrer votre numéro de téléphone">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email: *</label>
+                    <input id="email" type="email" name="email" required placeholder="Entrer votre adresse email">
+                </div>
+                <div class="form-group">
+                    <label for="address">Adresse : *</label>
+                    <input id="address" type="text" name="address" required placeholder="Entrer votre adresse">
+                </div>
+                <div class="form-group">
+                    <label for="postalCode">Code Postal : *</label>
+                    <input id="postalCode" type="text" name="postalCode" required placeholder="Entrer votre code postal">
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de Passe : *</label>
+                    <input id="password" type="password" name="password" required placeholder="Entrer votre mot de passe">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirmation de Mot de Passe : *</label>
+                    <input id="confirmPassword" type="password" name="confirmPassword" required placeholder="Confirmer votre mot de passe">
+                </div>
+                <div class="cb1">
+                    <label><input type="checkbox" required> J'ai lu et j'accepte les termes et les conditions d'utilisation</label>
+                </div>
+                <div class="btr2">
+                <button type="submit" class="bn632-hover bn26">Créer</button>
+                </div>
+            </form>
+            <div class="tut2">
+                <img alt="" src="../../assets/logo.png" width="150" height="150" class="logo2" /> <br/> <br/> <br/>
+                <h5 id="ll2"> <b>Avec </b> le programme de fidélite <b> Garagénie,</b> profitez de l'entretien automobile moins cher. <br/> <br/> Des <b>promotions </b> et des services gratuites toutes l'année.</h5>             </div>
+        </div>
+
+        <!-- Client Morale -->
+        <div *ngIf="isClientMoraleSelected()">
+            <form>
+                <div class="form-group">
+                    <label for="Name">Nom  : *</label>
+                    <input id="Name" type="text" name="Name" required placeholder="Entrer votre nom ">
+                </div>
+                <div class="form-group">
+                    <label for="siret">Prénom : *</label>
+                    <input id="siret" type="text" name="siret" required placeholder="Entrer votre prénom">
+                </div>
+                <div class="form-group">
+                    <label for="companyName">Nom de l'entreprise : *</label>
+                    <input id="companyName" type="text" name="companyName" required placeholder="Entrer le nom de votre société">
+                </div>
+                <div class="form-group">
+                    <label for="siret">Numéro de SIRET : *</label>
+                    <input id="siret" type="text" name="siret" required placeholder="Entrer le numéro de SIRET">
+                </div>
+                <div class="form-group">
+                    <label for="interlocuteur">Nom de l'interlocuteur : *</label>
+                    <input id="interlocuteur" type="text" name="interlocuteur" required placeholder="Entrer le nom de votre interlocuteur">
+                </div>
+                <div class="form-group">
+                    <label for="telClientMorale">Téléphone : *</label>
+                    <input id="telClientMorale" type="tel" name="telClientMorale" required placeholder="Entrer le numéro de téléphone">
+                </div>
+                <div class="form-group">
+                    <label for="emailClientMorale">Email : *</label>
+                    <input id="emailClientMorale" type="email" name="emailClientMorale" required placeholder="Entrer votre adresse email">
+                </div>
+                <div class="form-group">
+                    <label for="adresseClientMorale">Adresse : *</label>
+                    <input id="adresseClientMorale" type="text" name="adresseClientMorale" required placeholder="Entrer votre adresse">
+                </div>
+                <div class="form-group">
+                    <label for="postalCodeClientMorale">Code Postal : *</label>
+                    <input id="postalCodeClientMorale" type="text" name="postalCodeClientMorale" required placeholder="Entrer votre code postal">
+                </div>
+                <div class="form-group">
+                    <label for="passwordClientMorale">Mot de Passe : *</label>
+                    <input id="passwordClientMorale" type="password" name="passwordClientMorale" required placeholder="Entrer votre mot de passe">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPasswordClientMorale">Confirmation de Mot de Passe : *</label>
+                    <input id="confirmPasswordClientMorale" type="password" name="confirmPasswordClientMorale" required placeholder="Confirmer votre mot de passe">
+                </div>
+                <div class="cb1">
+                    <label><input type="checkbox" required> J'ai lu et j'accepte les termes et les conditions d'utilisation</label>
+                </div>
+                <div class="btr3">
+                <button type="submit" class="bn632-hover bn26">Créer </button>
+                </div>
+            </form>
+            <div class="tut">
+                <img alt="" src="../../assets/logo.png" width="150" height="150" class="logo2" /> <br/> <br/> <br/>
+                <h5> <b>Avec </b> le programme <b>Garagéniepro</b>, profitez de l'entretien automobile moins cher. Bénéfeciez d'un <b>service pro </b> spécialement dédié aux entreprises.</h5> <br/>
+    <li>Une plateforme web.</li>
+    <li>La gestion de votre parc automobile en ligne.</li>
+    <li>Des avantages personnalisés.</li>
+            </div>
+        </div>
+       
+
+        <!-- Garagiste -->
+        <div *ngIf="isGaragisteSelected()">
+            <form>
+                <div class="form-group">
+                    <label for="societe">Nom de la société : * </label>
+                    <input id="societe" type="text" name="societe" required placeholder="Entrer le nom de votre société">
+                </div>
+                <div class="form-group">
+                    <label for="siret">Numéro SIRET : *</label>
+                    <input id="siret" type="text" name="siret" required placeholder="Entre le numéro de SIRET">
+                </div>
+                <div class="form-group">
+                    <label for="codeNAF">Code NAF : *</label>
+                    <input id="codeNAF" type="text" name="codeNAF" required placeholder="Entrer le code NAF">
+                </div>
+                <div class="form-group">
+                    <label for="telGaragiste">Téléphone : *</label>
+                    <input id="telGaragiste" type="tel" name="telGaragiste" required placeholder="Entrer votre numéro de téléphone">
+                </div>
+                <div class="form-group">
+                    <label for="fax">Fax :</label>
+                    <input id="fax" type="tel" name="fax" placeholder="Entrer votre numéro de fax (optionnel)">
+                </div>
+                <div class="form-group">
+                    <label for="siteWeb">Site Web :</label>
+                    <input id="siteWeb" type="url" name="siteWeb" placeholder="Entrer l'URL de votre site web (optionnel)">
+                </div>
+                <div class="form-group">
+                    <label for="adresseGaragiste">Adresse : * </label>
+                    <input id="adresseGaragiste" type="text" name="adresseGaragiste" required placeholder="Entrer votre adresse">
+                </div>
+                <div class="form-group">
+                    <label for="codePostalGaragiste">Code Postal : *</label>
+                    <input id="codePostalGaragiste" type="text" name="codePostalGaragiste" required placeholder="Entrer votre code postal">
+                </div>
+                <div class="form-group">
+                    <label for="civilite">Civilité:</label>
+                    <select id="civilite"  name="civilite"  required >
+                        <option value="Monsieur">Monsieur</option>
+                        <option value="Madame">Madame</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="nomGaragiste">Nom : *</label>
+                    <input id="nomGaragiste" type="text" name="nomGaragiste" required placeholder="Entrer votre nom">
+                </div>
+                <div class="form-group">
+                    <label for="prenomGaragiste">Prénom : *</label>
+                    <input id="prenomGaragiste" type="text" name="prenomGaragiste" required placeholder="Entrer votre prénom">
+                </div>
+                <div class="form-group">
+                    <label for="emailGaragiste">Email: *</label>
+                    <input id="emailGaragiste" type="email" name="emailGaragiste" required placeholder="Entrer votre adresse email">
+                </div>
+                <div class="form-group">
+                    <label for="identifiant">Identifiant : *</label>
+                    <input id="identifiant" type="text" name="identifiant" required placeholder="Entrer votre identifiant">
+                </div>
+                <div class="form-group">
+                    <label for="passwordGaragiste">Mot de Passe : *</label>
+                    <input id="passwordGaragiste" type="password" name="passwordGaragiste" required placeholder="Entrer votre mot de passe">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPasswordGaragiste">Confirmation de Mot de Passe : *</label>
+                    <input id="confirmPasswordGaragiste" type="password" name="confirmPasswordGaragiste" required placeholder="Confirmer votre mot de passe">
+                </div>
+                <div class="cb1">
+                    <label><input type="checkbox" required> J'ai lu et j'accepte les termes et les conditions d'utilisation</label>
+                </div>
+                <div class="btr1">
+                <button type="submit" class="bn632-hover bn26">Créer </button>
+            </div>
+            </form>
+            <div class="tut3">
+                <img alt="" src="../../assets/logo.png" width="150" height="150" class="logo2" /> <br/> <br/> <br/>
+                <h5 id="ll2"> <b>Grâce </b> au programme de fidélité <b>Garagénie</b>, <br> bénéficiez d'un <b>agenda détaillé </b> et de statistiques claires pour une <b>gestion optimale </b> de votre garage. <br/> <br/>Profitez de <b>promotions </b> exclusives et de services gratuits tout au long de l'année.</h5>             </div>
+            
+        </div>
+        
+    </div>
+
+    <div class="btr">
+        <a> 
+            <button class="bn632-hover bn26" id="boutton1" routerLink="/login">Retour</button>
+        </a>
+    </div>
+</div> <br/> <br/> 
+<app-footer></app-footer>
