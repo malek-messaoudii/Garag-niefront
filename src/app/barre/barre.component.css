@@ -1,0 +1,27 @@
+.barre{
+    background: linear-gradient(135deg, #FFA500 0%, #FFD700 100%);
+    display: inline-flex;
+     justify-content: center;
+     align-items: center;
+     text-align: center;
+     width: 100%;
+     height: auto;
+     padding: 10px;
+     font-family: "Archivo Black", sans-serif;
+     position:fixed;
+     z-index: 5;
+    }
+
+h6{
+    font-weight: bold;
+    margin-top: 5px;
+
+}
+
+
+.btn{
+    background-color: #007bff;
+    font-weight: bold;
+    color: white;
+    margin-left: 50px;
+}

@@ -1,0 +1,21 @@
+<div>
+    <h2>Étape 1: Informations sur le véhicule</h2>
+    <h6>Veuillez saisir les informations de votre voiture :</h6>
+    <form (ngSubmit)="onNext()">
+      <label for="make">Marque : *</label>
+      <select id="make" [(ngModel)]="vehicle.make" name="make" (change)="onMakeChange($event)" required>
+        <option *ngFor="let make of makes" [value]="make">{{ make }}</option>
+      </select>
+      
+      <label for="model">Modèle : *</label>
+      <select id="model" [(ngModel)]="vehicle.model" name="model" required>
+        <option *ngFor="let model of models" [value]="model">{{ model }}</option>
+      </select>
+      
+      <label for="imm">Immatriculation : *</label>
+      <input id="imm" [(ngModel)]="vehicle.immatriculation" name="imm" required>
+      
+      <button type="submit">Suivant</button>
+    </form>
+  </div>
+  

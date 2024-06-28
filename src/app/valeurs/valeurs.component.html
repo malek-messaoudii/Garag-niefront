@@ -1,0 +1,12 @@
+<div class="valeurs-container">
+    <div><h2 id="nosval">NOS VALEURS</h2> </div>
+    <div class="book">
+    <div *ngFor="let valeur of valeurs" class="valeur-card">
+      <div class="valeur-icon">
+        <mat-icon>{{ valeur.icon }}</mat-icon>
+      </div>
+      <h3>{{ valeur.titre }}</h3>
+      <p>{{ valeur.description }}</p>
+    </div> </div>
+  </div>
+  

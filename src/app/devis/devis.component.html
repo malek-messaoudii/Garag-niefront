@@ -1,0 +1,17 @@
+<app-navbar></app-navbar>
+<div class="quote-form">
+    <div *ngIf="currentStep === 1">
+      <app-quote-step1 (nextStep)="goToNextStep()" (vehicleInfo)="setVehicleInfo($event)"></app-quote-step1>
+    </div>
+    <div *ngIf="currentStep === 2">
+      <app-quote-step2 (nextStep)="goToNextStep()" (prevStep)="goToPreviousStep()" (usageInfo)="setUsageInfo($event)"></app-quote-step2>
+    </div>
+    <div *ngIf="currentStep === 3">
+      <app-quote-step3 (nextStep)="goToNextStep()" (prevStep)="goToPreviousStep()" (specificOptions)="setSpecificOptions($event)"></app-quote-step3>
+    </div>
+    <div *ngIf="currentStep === 4">
+      <app-quote-step4 (prevStep)="goToPreviousStep()"></app-quote-step4>
+    </div>
+  </div>
+  
+<app-footer></app-footer>

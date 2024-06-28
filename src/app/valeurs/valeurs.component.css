@@ -1,0 +1,54 @@
+.valeurs-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  }
+  h3{
+    font-family: "Archivo Black", sans-serif;
+    font-size: 20px;
+  }
+  .valeur-card {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 10px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    margin-inline: 80px;
+  }
+  .book{
+    display: inline-flex;
+
+
+  }
+  
+  .valeur-icon {
+    font-size: 48px;
+    color: #ff5722;
+    margin-bottom: 10px;
+  }
+  
+
+  #nosval{
+    font-family: "Archivo Black", sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+    font-style: normal;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    color: black;
+    position: relative;
+    margin-bottom:40px ;
+    margin-top: 20px;
+  }

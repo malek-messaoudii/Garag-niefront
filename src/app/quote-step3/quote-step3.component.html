@@ -1,0 +1,14 @@
+<div>
+    <h2>Étape 3: Options spécifiques</h2>
+    <form (ngSubmit)="onNext()">
+      <label for="option1">Option 1:</label>
+      <input id="option1" type="checkbox" [(ngModel)]="options.option1" name="option1">
+      
+      <label for="option2">Option 2:</label>
+      <input id="option2" type="checkbox" [(ngModel)]="options.option2" name="option2">
+      
+      <button type="button" (click)="onPrevious()">Précédent</button>
+      <button type="submit">Suivant</button>
+    </form>
+  </div>
+  

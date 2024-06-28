@@ -15,6 +15,23 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContactComponent } from './contact/contact.component';
 import { ServicesComponent } from './services/services.component';
 import { AccueilComponent } from './accueil/accueil.component';
+import { Homes1Component } from './homes1/homes1.component';
+import { ValeursComponent } from './valeurs/valeurs.component';
+import { AproposComponent } from './apropos/apropos.component';
+import { QuestionsComponent } from './questions/questions.component';
+import { ServiceComponent } from './service/service.component';
+import { NotfoundComponent } from './notfound/notfound.component';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { PrestationsComponent } from './prestations/prestations.component';
+import { DevisComponent } from './devis/devis.component';
+import { BarreComponent } from './barre/barre.component';
+import { QuoteStep1Component } from './quote-step1/quote-step1.component';
+import { QuoteStep2Component } from './quote-step2/quote-step2.component';
+import { QuoteStep3Component } from './quote-step3/quote-step3.component';
+import { QuoteStep4Component } from './quote-step4/quote-step4.component';
+
 
 
 
@@ -31,13 +48,36 @@ import { AccueilComponent } from './accueil/accueil.component';
     ContactComponent,
     ServicesComponent,
     AccueilComponent,
+    Homes1Component,
+    ValeursComponent,
+    AproposComponent,
+    QuestionsComponent,
+    ServiceComponent,
+    NotfoundComponent,
+    PrestationsComponent,
+    DevisComponent,
+    BarreComponent,
+    QuoteStep1Component,
+    QuoteStep2Component,
+    QuoteStep3Component,
+    QuoteStep4Component,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MatIconModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule, 
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-center',
+      closeButton: true,
+      timeOut: 3000,
+      preventDuplicates: true,
+      progressBar: false,
+    }),
+
   ],
   providers: [],
   bootstrap: [AppComponent]

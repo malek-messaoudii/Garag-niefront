@@ -132,6 +132,8 @@ body {
 form input[type="email"],
 form input[type="password"],
 form input[type="tel"],
+form input[type="number"],
+form input[type="date"],
 form input[type="url"] {
   width: 400px;
   padding: 10px;
@@ -141,6 +143,8 @@ form input[type="url"] {
 }
 
 form input[type="text"]:focus,
+form input[type="number"]:focus
+form input[type="date"]:focus,
 form input[type="email"]:focus,
 form input[type="password"]:focus,
 form input[type="tel"]:focus,
@@ -190,7 +194,7 @@ form {
 
 
  .btr2{
-    margin-top: 625px;
+    margin-top: 690px;
     position:absolute;
     left: 130px;
  }

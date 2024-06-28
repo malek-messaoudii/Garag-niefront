@@ -1,0 +1,14 @@
+<div>
+    <h2>Étape 2: Type d'usage et date de la dernière révision</h2>
+    <form (ngSubmit)="onNext()">
+      <label for="type">Type d'usage:</label>
+      <input id="type" [(ngModel)]="usage.type" name="type" required>
+      
+      <label for="lastRevisionDate">Date de la dernière révision:</label>
+      <input id="lastRevisionDate" type="date" [(ngModel)]="usage.lastRevisionDate" name="lastRevisionDate" required>
+      
+      <button type="button" (click)="onPrevious()">Précédent</button>
+      <button type="submit">Suivant</button>
+    </form>
+  </div>
+  
