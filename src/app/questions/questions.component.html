@@ -1,0 +1,17 @@
+<div class="background">
+<div class="questionsfrequentes-container">
+    <h1> QUESTIONS FREQUENTES</h1>
+    <div class="p1">
+    <div class="question-card" *ngFor="let item of itemss">
+      <div class="question-card-content">
+        <h3 class="a4">{{ item.title }}</h3>
+        <p class="a5">{{ item.para }}</p>
+      </div>
+    </div>
+    <div class="navigation-buttons">
+      <button class="nav-button" (click)="changeg()">←</button>
+      <button class="nav-button" (click)="changed()">→</button>
+    </div>
+</div>
+  </div>
+</div>

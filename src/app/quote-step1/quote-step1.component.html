@@ -1,0 +1,38 @@
+<!-- quote-step1.component.html -->
+<div class="background"><br>
+  <h1>Votre devis gratuit personnalisé<br>gratuit en 4 étapes</h1>
+</div>
+<div class="m1">
+  <div class="m2">
+    <h2>Étape 1: Informations sur le véhicule</h2>
+    <h6>Veuillez saisir les informations de votre voiture :</h6>
+    <form (ngSubmit)="onNext()">
+      <label for="make">Marque : *</label>
+      <select id="make" [(ngModel)]="vehicule.make" name="make" (change)="onMakeChange($event)" required>
+        <option *ngFor="let make of makes" [value]="make">{{ make }}</option>
+      </select>
+      
+      <label for="model">Modèle : *</label>
+      <select id="model" [(ngModel)]="vehicule.model" name="model" required>
+        <option *ngFor="let model of models" [value]="model">{{ model }}</option>
+      </select>
+      
+      <label for="imm">Immatriculation : *</label>
+      <input id="imm" [(ngModel)]="vehicule.immatriculation" name="immatriculation" required>
+      
+      <label for="kilo">Kilométrage : *</label>
+      <input id="kilo" [(ngModel)]="vehicule.kilo" name="kilo" required type="number">
+      
+      <button type="submit" class="bn632-hover bn26">Suivant</button>
+    </form>
+  </div>
+  <div *ngIf="prestation" class="prestation">
+    <h3> Détails de la prestation {{ prestation.titre }}</h3>
+    <div *ngFor="let detail of prestation.details" class="desc">
+      <mat-icon> check_circle</mat-icon> <p>{{ detail }}</p>
+    </div>
+    <div class="img">
+      <img alt="" src="../../assets/logo3.png" width="165" height="165" class="logo2" /> <br/> <br/> <br/>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,103 @@
+<div class="background"><br>
+  <h1 class="mt">Recevez votre devis</h1>
+</div>
+
+<div class="m1">
+  <div class="m2">
+    <h2>Étape 4: Informations personnelles</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="type">Vous êtes :</label>
+        <select id="personneType" name="type" [(ngModel)]="formData.utilisateur.type">
+          <option value="particulier">Un particulier</option>
+          <option value="entreprise">Une entreprise</option>
+        </select>
+      </div>
+
+      <!-- Formulaire pour particulier -->
+      <div *ngIf="formData.utilisateur.type === 'particulier'">
+        <div class="form-group">
+          <label for="nom">Nom : *</label>
+          <input id="firstName" type="text" name="nom" [(ngModel)]="formData.utilisateur.nom" required placeholder="Entrer votre nom">
+        </div>
+        <div class="form-group">
+          <label for="prenom">Prénom : *</label>
+          <input id="lastName" type="text" name="prenom" [(ngModel)]="formData.utilisateur.prenom" required placeholder="Entrer votre prénom">
+        </div>
+        <div class="form-group">
+          <label for="telephone">Téléphone : *</label>
+          <input id="phone" type="tel" name="telephone" [(ngModel)]="formData.utilisateur.telephone" required placeholder="Entrer votre numéro de téléphone">
+        </div>
+        <div class="form-group">
+          <label for="email">Email: *</label>
+          <input id="email" type="email" name="email" [(ngModel)]="formData.utilisateur.email" required placeholder="Entrer votre adresse email">
+        </div>
+        <div class="form-group">
+          <label for="adresse">Adresse : *</label>
+          <input id="address" type="text" name="adresse" [(ngModel)]="formData.utilisateur.adresse" required placeholder="Entrer votre adresse">
+        </div>
+        <div class="form-group">
+          <label for="codePostal">Code Postal : *</label>
+          <input id="postalCode" type="text" name="codePostal" [(ngModel)]="formData.utilisateur.codePostal" required placeholder="Entrer votre code postal">
+        </div>
+        <div class="form-group">
+          <label for="desc">Description :</label>
+          <textarea id="desc" name="desc" [(ngModel)]="formData.prestation.desc"></textarea>
+        </div>
+      </div>
+      
+      <!-- Formulaire pour entreprise -->
+      <div *ngIf="formData.utilisateur.type === 'entreprise'">
+        <div class="form-group">
+          <label for="nomEntreprise">Nom de l'entreprise : *</label>
+          <input id="companyName" type="text" name="nomEntreprise" [(ngModel)]="formData.utilisateur.nomEntreprise" required placeholder="Entrer le nom de votre entreprise">
+        </div>
+        <div class="form-group">
+          <label for="siret">Numéro de SIRET : *</label>
+          <input id="siret" type="text" name="siret" [(ngModel)]="formData.utilisateur.siret" required placeholder="Entrer le numéro de SIRET">
+        </div>
+        <div class="form-group">
+          <label for="nom">Nom : *</label>
+          <input id="firstName" type="text" name="nom" [(ngModel)]="formData.utilisateur.nom" required placeholder="Entrer votre nom">
+        </div>
+        <div class="form-group">
+          <label for="prenom">Prénom : *</label>
+          <input id="lastName" type="text" name="prenom" [(ngModel)]="formData.utilisateur.prenom" required placeholder="Entrer votre prénom">
+        </div>
+        <div class="form-group">
+          <label for="telephone">Téléphone : *</label>
+          <input id="phone" type="tel" name="telephone" [(ngModel)]="formData.utilisateur.telephone" required placeholder="Entrer votre numéro de téléphone">
+        </div>
+        <div class="form-group">
+          <label for="email">Email: *</label>
+          <input id="email" type="email" name="email" [(ngModel)]="formData.utilisateur.email" required placeholder="Entrer votre adresse email">
+        </div>
+        <div class="form-group">
+          <label for="adresse">Adresse : *</label>
+          <input id="address" type="text" name="adresse" [(ngModel)]="formData.utilisateur.adresse" required placeholder="Entrer votre adresse">
+        </div>
+        <div class="form-group">
+          <label for="codePostal">Code Postal : *</label>
+          <input id="postalCode" type="text" name="codePostal" [(ngModel)]="formData.utilisateur.codePostal" required placeholder="Entrer votre code postal">
+        </div>
+        <div class="form-group">
+          <label for="desc">Description :</label>
+          <textarea id="desc" name="desc" [(ngModel)]="formData.prestation.desc"></textarea>
+        </div>
+      </div>
+
+      <div class="btn">
+        <button type="button" (click)="onPrevious()" class="bn632-hover bn26">Précédent</button>
+        <button type="submit" class="bn632-hover bn26">Suivant</button>
+      </div>
+    </form>
+    
+  </div>
+  <div class="p1">
+    <h5 class="p2">Après la soumission de votre demande de devis, nos experts l'examineront rapidement. <br> Vous serez contacté dès que votre devis sera validé.<br> Merci de votre confiance, Garagénie s'engage à vous offrir une expérience rapide et efficace.</h5>
+    <br> <br>
+    <div>
+      <img alt="" src="../../assets/logo2.png" width="420" height="150" class="logo1" />
+  </div>
+  </div>
+</div>

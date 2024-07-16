@@ -1,0 +1,16 @@
+<app-sidebar></app-sidebar>
+<div class="promotions-container">
+  <div *ngFor="let month of months">
+    <div class="month-container" *ngIf="promotionsByMonth[month]?.length">
+      <h2>Promotions pour le mois de {{ month }}</h2>
+      <div class="promotions-grid">
+        <div class="promotion-card" *ngFor="let promotion of promotionsByMonth[month]">
+          <div class="promotion-price">{{ promotion.price }}€</div>
+          <div class="promotion-description">{{ promotion.description }}</div>
+          <button class="promotion-button" >J'en profite</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

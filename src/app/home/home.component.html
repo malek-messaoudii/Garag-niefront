@@ -1,0 +1,71 @@
+<app-barre2></app-barre2>
+<app-sidebar></app-sidebar>
+<div>
+  <div class="video-background-container">
+    <img src="../../assets/automobile.jpg" alt="Automobile background" id="image-background">
+
+  <div class="content">
+    <h1 class="tot">LA RÉPARATION AUTOMOBILE  <br> D'UNE GRANDE ENSEIGNE <br> À PRIX IMBATTABLE</h1>
+    <div class="btn5">
+      <button class="bn632-hover bn26" routerLink="/devisexpress2">Devis express <mat-icon>double_arrow_icon</mat-icon></button>
+    </div>
+  </div>
+</div>
+
+
+<div class="center">
+  <div class="rectangle">
+    <div class="mo1">
+      <div class="cercle"><mat-icon class="icon">book_online_icon</mat-icon></div>
+      <h6>Devis en ligne</h6>
+    </div>
+    <div class="mo1">
+      <div class="cercle"><mat-icon class="icon">price_check_icon</mat-icon></div>
+      <h6>Le meilleure prix</h6>
+    </div>
+    <div class="mo1">
+      <div class="cercle"><mat-icon class="icon">handshake_icon</mat-icon></div>
+      <h6>Garantie en 12 mois</h6>
+    </div>
+    <div class="mo1">
+      <div class="cercle"><mat-icon class="icon">payment_icon</mat-icon></div>
+      <h6>Paiement en 4 fois</h6>
+    </div>
+    <div class="mo1">
+      <div class="cercle"><mat-icon class="icon">car_rental_icon</mat-icon></div>
+      <h6>Voiture de prêt</h6>
+    </div>
+  </div>
+</div>
+
+<br><br><br/>
+
+
+  
+  <div id="prestations">
+    <div class="prestations-container">
+      <div><h1 id="nosval">Obtenez votre devis en 4 clics</h1></div>
+      <br><br>
+      <div class="book">
+        <div *ngFor="let prestation of prestations" class="prestation-card" (click)="onPrestationClick(prestation)">
+          <div class="prestation-image">
+            <img [src]="prestation.image" alt="{{ prestation.titre }}">
+          </div>
+          <h3>{{ prestation.titre }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br/><br/><br/>
+
+<div id="service">
+  <div class="background">
+    <div class="m1">
+      <h2 class="tit">Vous souhaitez demander un devis par téléphone</h2>
+      <br>
+      <button class="btn" routerLink="/tel2">Devis par tel</button>
+    </div>
+  </div>
+
+<app-footer></app-footer>

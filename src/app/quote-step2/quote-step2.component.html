@@ -1,0 +1,44 @@
+<div class="background"><br>
+  <h1>Votre devis gratuit personnalisé<br>gratuit en 4 étapes</h1>
+</div>
+<div class="m1">
+  <div class="m2">
+    <h2>Étape 2: Type d'usage et symptômes</h2>
+    <h6>Précisez votre type d'usage:</h6>
+    <form (ngSubmit)="onNext()">
+      <label>Type d'usage:</label>
+      <div *ngFor="let type of prestation?.usageTypes">
+        <input type="checkbox" [id]="type" [value]="type" (change)="onUsageTypeChange($event)">
+        <label [for]="type" class="ty">{{ type }}</label>
+      </div><br>
+
+      <label for="datedernierrevision">Date de la dernière révision:</label>
+      <input type="date" id="datedernierrevision" [(ngModel)]="datedernierrevision" name="datedernierrevision" required>
+
+      <div class="btn">
+        <button type="button" (click)="onPrevious()" class="bn632-hover bn26">Précédent</button>
+        <button type="submit" class="bn632-hover bn26">Suivant</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="vehicle-info">
+    <h3>Mon véhicule</h3>
+    <div class="info-item">
+      <mat-icon>play_circle</mat-icon>
+      <p>Marque: <span>{{ vehicule?.make }}</span></p>
+    </div>
+    <div class="info-item">
+      <mat-icon>play_circle</mat-icon>
+      <p>Modèle: <span>{{ vehicule?.model }}</span></p>
+    </div>
+    <div class="info-item">
+      <mat-icon>play_circle</mat-icon>
+      <p>Immatriculation: <span>{{ vehicule?.immatriculation }}</span></p>
+    </div>
+    <div class="info-item">
+      <mat-icon>play_circle</mat-icon>
+      <p>Kilométrage: <span>{{ vehicule?.kilo }}</span></p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,241 @@
+.m1 {
+  display: inline-flex;
+  justify-content: center;
+  margin: 80px 80px;
+}
+
+.m2 {
+  width: 700px; 
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+  font-family: "Poppins", sans-serif;
+}
+
+.prestation {
+  margin-top: 50px;
+  margin-left: 50px;
+  color: #007bff;
+}
+
+.identification {
+  display: inline-flex;
+}
+
+.desc {
+  display: flex;
+  margin-top: 10px;
+}
+
+.mt {
+  margin-top: 20px;
+}
+
+.logo2 {
+  transition: 1s;
+}
+
+.logo2:hover {
+  scale: 1.8;
+}
+
+.img {
+  margin-left: 200px;
+  margin-top: 40px;
+}
+
+.desc mat-icon {
+  margin-right: 8px;
+}
+
+.prestation > h3 {
+  font-family: "Archivo Black", sans-serif;
+  font-size: 25px;
+  margin-bottom: 40px;
+}
+
+.prestation > p {
+  font-family: "Poppins", sans-serif;
+  font-size: 25px;
+}
+
+.background {
+  background-image: url('../../assets/voit.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  z-index: 4;
+  height: 50vh;
+}
+
+h1 {
+  font-family: "Archivo Black", sans-serif;
+  margin-left: 40px;
+  font-size: 35px;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 25px;
+  font-family: "Archivo Black", sans-serif;
+}
+
+h6 {
+  text-align: start;
+  color: #666;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  display: flex;
+  align-items: center; 
+  margin-bottom: 20px;
+}
+
+label {
+  margin-right: 10px;
+  font-weight: bold;
+  color: #333;
+  width: 180px;
+
+}
+.identification-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+/* Style commun pour les div .dov */
+.dov {
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+}
+
+/* Style spécifique pour particulier */
+.particulier {
+  color: blue;
+  width: 100%;
+
+}
+
+.particulier .radio-input:checked + label {
+  font-weight: bold;
+  color: darkblue;
+  width: 100%;
+
+}
+
+/* Style spécifique pour entreprise */
+.entreprise {
+  color: green;
+  width: 100%;
+
+}
+
+.entreprise .radio-input:checked + label {
+  font-weight: bold;
+  color: darkgreen;
+  width: 100%;
+}
+
+/* Style commun pour les input radio */
+.radio-input {
+  margin-right: 10px;
+}
+
+
+input, textarea,select {
+  flex: 1; 
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+input:focus, textarea:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+
+
+
+
+
+.bn632-hover {
+  width: 160px;
+  font-size: 16px;
+  font-weight: 600;
+  color: black;
+  cursor: pointer;
+  margin: 20px;
+  height: 55px;
+  text-align:center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 10px;
+  moz-transition: all .4s ease-in-out;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;    
+  font-family: "Archivo Black", sans-serif;
+
+}
+
+.bn632-hover:hover {
+  background-position: 100% 0;
+  moz-transition: all .4s ease-in-out;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+}
+
+.bn632-hover:focus {
+  outline: none;
+}
+
+.bn632-hover.bn26 {
+  background-image: linear-gradient(
+    to right,
+    #FFA500,
+    #FFD700,
+    #FFA500,
+    #FFD700
+  );
+  box-shadow: 0 4px 15px 0      #FFA500;
+  margin-top: 20px;
+}
+
+.p1{
+  margin-left: 80px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 250px;
+}
+
+.p2{
+  font-size: 20px;
+  line-height:30px;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  color: #007bff;
+}

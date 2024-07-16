@@ -1,0 +1,30 @@
+<nav class="navbar">
+        <div class="navbar-left" >
+            <a routerLink="/home">
+            <img alt="" src="../../assets/logo2.png" class="logo" /> </a>
+        </div>
+        <div class="navbar-center">
+            <div class="navbar-item"routerLink="/home"><a routerLink="/home" class="l7">Accueil</a></div>
+            <div class="navbar-item" routerLink="/promo"><a routerLink="/promo" class="l7">Nos promotions</a></div>
+            <div class="navbar-item"> <a routerLink="/contact2" class="l7">Contactez nous </a> </div>
+        </div>
+        <div class="navbar-right">
+            <button class="navbar-toggler" type="button" (click)="toggleMenu()">Mon compte
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+    <div class="sidebar" [class.active]="menuOpen">
+        <a class="closebtn" (click)="toggleMenu()">&times;</a>
+        <div class="a7">
+            <a routerLink="/userinfo">Mes informations personnelles</a>
+            <a routerLink="/vehicule">Mes véhicules</a>
+            <a routerLink="/rdv">Mes RDV</a>
+            <a routerLink="/demandes">Mes demandes</a>
+            <a routerLink="/rdvvenir">RDV à venir</a>
+            <a routerLink="/carnet">Mon carnet d'entretien</a>
+            <a href="#">Voiture de prèt</a>
+            <a (click)="handleLogout()"> <p  class="a8">Déconnexion  <mat-icon class="ico">logout_icon</mat-icon> </p></a>
+        </div>
+    </div>
+

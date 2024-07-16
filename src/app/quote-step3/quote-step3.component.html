@@ -1,0 +1,42 @@
+<div class="background">
+  <h1>Votre devis gratuit personnalisé en 4 étapes</h1>
+</div>
+
+<div class="m1">
+  <div class="m2">
+    <h2>Étape 3: Options spécifiques</h2>
+    <h6>Sélectionnez les options spécifiques pour votre véhicule :</h6>
+    <form (submit)="onNext()">
+      <div *ngFor="let option of prestation.specificOptions">
+        <input type="checkbox" [id]="option" [value]="option" (change)="onOptionChange($event)">
+        <label [for]="option" class="ty">{{ option }}</label>
+      </div>
+      <br>
+      <h6>Si vous ne savez pas répondre aux questions, validez cette page avec le commercial de notre garage Garagénie.</h6>
+      <div class="btn">
+        <button type="button" (click)="onPrevious()" class="bn632-hover bn26">Précédent</button>
+        <button type="submit"  class="bn632-hover bn26">Suivant</button>
+      </div>
+    </form>
+  </div>
+  
+  <div class="vehicle-info">
+    <h3>Mon véhicule</h3>
+    <div class="info-item">
+      <mat-icon>play_circle</mat-icon>
+      <p>Marque: <span>{{ vehicule?.make }}</span></p>
+    </div>
+    <div class="info-item">
+      <mat-icon>play_circle</mat-icon>
+      <p>Modèle: <span>{{ vehicule?.model }}</span></p>
+    </div>
+    <div class="info-item">
+      <mat-icon>play_circle</mat-icon>
+      <p>Immatriculation: <span>{{ vehicule?.immatriculation }}</span></p>
+    </div>
+    <div class="info-item">
+      <mat-icon>play_circle</mat-icon>
+      <p>Kilométrage: <span>{{ vehicule?.kilo }}</span></p>
+    </div>
+  </div>
+</div>

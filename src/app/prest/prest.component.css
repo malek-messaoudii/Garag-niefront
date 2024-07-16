@@ -1,0 +1,51 @@
+.prestations-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Archivo Black", sans-serif;
+  margin-bottom: 40px;
+
+}
+
+.book {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+h3{
+  font-family: "Archivo Black", sans-serif;
+  font-size: 15px;
+}
+.prestation-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 10px;
+  padding: 16px;
+  max-width: 300px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+  margin-inline: 40px;
+}
+
+.prestation-card:hover {
+  transform: scale(1.05);
+}
+
+.prestation-icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.prestation-image img {
+  width: 270px;
+  height: 180px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+#nosval{
+  text-transform:uppercase;
+  font-family: "Archivo Black", sans-serif;
+  font-size: 40px;
+}

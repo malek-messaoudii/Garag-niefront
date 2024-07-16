@@ -1,0 +1,314 @@
+<app-sidebar></app-sidebar>
+
+<div class="m1">
+  Mes véhicules
+</div>
+<div class="m3">
+  <h6> Vous trouvez ci-dessous la liste de vos véhicules : </h6>
+  <button (click)="toggleAddForm()" class="btn8"> Ajouter un nouveau véhicule <mat-icon>car_repair_icon</mat-icon></button> 
+</div>
+
+<div *ngIf="showAddForm" class="overlay">
+  <div class="popup-form">
+    <h3 class="hh">Ajouter un véhicule</h3>
+    <form [formGroup]="addVehiculeForm" (ngSubmit)="addVehicule()">
+      <div class="form-group">
+        <label for="make">Marque : *</label>
+        <select id="make" formControlName="make" (change)="onMakeChange($event)" class="form-control">
+          <option value="" disabled selected>Sélectionnez une marque</option>
+          <option *ngFor="let make of makes" [value]="make">{{ make }}</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="model">Modèle : *</label>
+        <select id="model" formControlName="model" class="form-control">
+          <option value="" disabled selected>Sélectionnez un modèle</option>
+          <option *ngFor="let model of models" [value]="model">{{ model }}</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="immatriculation">Immatriculation : *</label>
+        <input id="immatriculation" formControlName="immatriculation" class="form-control" placeholder="Entrez l'immatriculation">
+      </div>
+      
+      <div class="form-group">
+        <label for="kilo">Kilomètres : *</label>
+        <input id="kilo" formControlName="kilo" class="form-control" type="number" placeholder="Entrez le kilométrage">
+      </div>
+      
+      <div class="form-group">
+        <label for="datedernierrev">Date Dernière Révision : *</label>
+        <input id="datedernierrev" formControlName="datedernierrev" class="form-control" type="date" placeholder="Sélectionnez la date de la dernière révision">
+      </div>
+      
+      <div class="form-group">
+        <label for="boite">Boîte : *</label>
+        <select id="boite" formControlName="boite" class="form-control">
+          <option value="" disabled selected>Sélectionnez la boîte</option>
+          <option *ngFor="let option of boiteOptions" [value]="option">{{ option }}</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="energie">Énergie : *</label>
+        <select id="energie" formControlName="energie" class="form-control">
+          <option value="" disabled selected>Sélectionnez le type d'énergie</option>
+          <option *ngFor="let option of energieOptions" [value]="option">{{ option }}</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="email">E-mail : *</label>
+        <input type="email" id="email" formControlName="email" class="form-control" placeholder="Entrez votre e-mail">
+      </div>
+
+      <div class="d1">
+        <button type="submit" class="btn btn-success">Ajouter</button>
+        <button type="button" class="btn btn-secondary" (click)="toggleAddForm()">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <div *ngIf="vehicules.length === 0" class="p1">
+    <h1>Pas encore de véhicules</h1> <mat-icon class="ico">report_icon</mat-icon>
+  </div>
+
+  <table *ngIf="vehicules.length > 0" class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Marque</th>
+        <th>Modèle</th>
+        <th>Immatriculation</th>
+        <th>Kilomètres</th>
+        <th>Date Dernière Révision</th>
+        <th>Modification</th>
+        <th>Suppression</th>
+        <th>Entretien</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let vehicule of vehicules">
+        <td>{{ vehicule.make }}</td>
+        <td>{{ vehicule.model }}</td>
+        <td>{{ vehicule.immatriculation }}</td>
+        <td>{{ vehicule.kilo }}</td>
+        <td>{{ vehicule.datedernierrev | date: 'dd/MM/yyyy' }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="openUpdateForm(vehicule)">Mettre à jour</button>
+        </td>
+        <td>
+          <button class="btn btn-danger" (click)="deleteVehicule(vehicule._id)">Supprimer</button>
+        </td>
+        <td>
+          <button class="btn btn-info" (click)="viewHistory(vehicule._id)">Voir Historique</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="showUpdateForm" class="overlay">
+  <div class="popup-form">
+    <h3 class="hh">Mettre à jour un véhicule</h3>
+    <form [formGroup]="updateVehiculeForm" (ngSubmit)="submitUpdatedVehicule()">
+      <div class="form-group">
+        <label for="make">Marque : *</label>
+        <select id="make" formControlName="make" (change)="onMakeChange($event)" class="form-control">
+          <option value="" disabled selected>Sélectionnez une marque</option>
+          <option *ngFor="let make of makes" [value]="make">{{ make }}</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="model">Modèle : *</label>
+        <select id="model" formControlName="model" class="form-control">
+          <option value="" disabled selected>Sélectionnez un modèle</option>
+          <option *ngFor="let model of models" [value]="model">{{ model }}</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="immatriculation">Immatriculation : *</label>
+        <input id="immatriculation" formControlName="immatriculation" class="form-control" placeholder="Entrez l'immatriculation">
+      </div>
+      
+      <div class="form-group">
+        <label for="kilo">Kilomètres : *</label>
+        <input id="kilo" formControlName="kilo" class="form-control" type="number" placeholder="Entrez le kilométrage">
+      </div>
+      
+      <div class="form-group">
+        <label for="datedernierrev">Date Dernière Révision : *</label>
+        <input id="datedernierrev" formControlName="datedernierrev" class="form-control" type="date" placeholder="Sélectionnez la date de la dernière révision">
+      </div>
+      
+      <div class="form-group">
+        <label for="boite">Boîte : *</label>
+        <select id="boite" formControlName="boite" class="form-control">
+          <option value="" disabled selected>Sélectionnez la boîte</option>
+          <option *ngFor="let option of boiteOptions" [value]="option">{{ option }}</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="energie">Énergie : *</label>
+        <select id="energie" formControlName="energie" class="form-control">
+          <option value="" disabled selected>Sélectionnez le type d'énergie</option>
+          <option *ngFor="let option of energieOptions" [value]="option">{{ option }}</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="email">E-mail : *</label>
+        <input type="email" id="email" formControlName="email" class="form-control" placeholder="Entrez votre e-mail">
+      </div>
+
+      <div class="d1">
+        <button type="submit" class="btn btn-success">Mettre à jour</button>
+        <button type="button" class="btn btn-secondary" (click)="toggleUpdateForm()">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<div class="actions">
+  <button class="bn632-hover bn26" (click)="requestQuote()">DEMANDER UN DEVIS</button>
+  <button class="bn632-hover bn26" (click)="scheduleAppointment()">PRENDRE UN RDV</button>
+</div>
+<div *ngIf="showAddForm1" class="overlay">
+  <div class="popup-form">
+    <h3 class="hh">Prendre un rendez-vous</h3>
+    <form [formGroup]="addrdvForm" (ngSubmit)="addrdv()">
+      <div class="form-group">
+        <label for="vehicule">Choisissez votre véhicule : *</label>
+        <select id="vehicule" formControlName="vehicule" class="form-control">
+          <option value="" disabled selected>Sélectionnez un véhicule</option>
+          <option *ngFor="let vehicule of vehicules" [value]="vehicule">{{ vehicule.immatriculation }} - {{ vehicule.make }}</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="numdevis">Numéro de devis : *</label>
+        <input id="numdevis" formControlName="numdevis" class="form-control" placeholder="Entrez le numéro de devis">
+      </div>
+            
+      <div class="form-group">
+        <label for="datesouhaite">Date de rendez-vous souhaité : *</label>
+        <input id="datesouhaite" formControlName="datesouhaite" class="form-control" type="date" placeholder="Sélectionnez la date du rdv souhaité">
+      </div>
+      
+      <div class="form-group">
+        <label for="heuresouhaite">Heure de rendez-vous souhaité : *</label>
+        <input id="heuresouhaite" formControlName="heuresouhaite" class="form-control" type="number" placeholder="Entrez l'heure du rdv souhaité">
+      </div>
+
+      <div class="form-group">
+        <label for="prestation">Prestation : *</label>
+        <select id="prestation" formControlName="titrepres"  class="form-control" required>
+          <option value="" disabled selected>Sélectionnez une prestation</option>
+          <option value="FORFAIT RÉVISION">FORFAIT RÉVISION</option>
+          <option value="FORFAIT FREINAGE">FORFAIT FREINAGE</option>
+          <option value="FORFAIT AMORTISSEUR">FORFAIT AMORTISSEUR</option>
+          <option value="FORFAIT EMBRAYAGE">FORFAIT EMBRAYAGE</option>
+          <option value="DÉMARRAGE">DÉMARRAGE</option>
+          <option value="FORFAIT KIT DE DISTRIBUTION">FORFAIT KIT DE DISTRIBUTION</option>
+          <option value="DIRECTION">DIRECTION</option>
+          <option value="FORFAIT ÉCHAPPEMENT">FORFAIT ÉCHAPPEMENT</option>
+          <option value="FORFAIT CLIMATISATION">FORFAIT CLIMATISATION</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="desc">Description : </label>
+        <textarea id="desc" formControlName="desc" class="form-control"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="voiturepret">Voiture de prêt : </label>
+        <input id="voiturepret" formControlName="voiturepret" type="checkbox">
+      </div>
+      
+      <div class="form-group">
+        <label for="email">E-mail : *</label>
+        <input type="email" id="email" formControlName="email" class="form-control" placeholder="Entrez votre e-mail">
+      </div>
+
+      <div class="d1">
+        <button type="submit" class="btn btn-success">Ajouter</button>
+        <button type="button" class="btn btn-secondary" (click)="scheduleAppointment()">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+<div *ngIf="showAddForm2" class="overlay">
+  <div class="popup-form">
+    <h3 class="hh">Demander un devis</h3>
+    <form [formGroup]="adddevisForm" (ngSubmit)="adddevis()">
+      <div class="form-group">
+        <label for="typedemande">Type de demande : *</label>
+        <input id="typedemande" formControlName="typedemande" class="form-control" readonly>
+      </div>
+      <div class="form-group">
+        <label for="email">E-mail : *</label>
+        <input type="email" id="email" formControlName="email" class="form-control" >
+      </div>
+
+      <div class="form-group">
+        <label for="vehicule">Choisissez votre véhicule : *</label>
+        <select id="vehicule" formControlName="vehicule" class="form-control">
+          <option value="" disabled selected>Sélectionnez un véhicule</option>
+          <option *ngFor="let vehicule of vehicules" [value]="vehicule._id">{{ vehicule.immatriculation }} - {{ vehicule.make }}</option>
+        </select>
+      </div>
+      
+
+      <div class="form-group">
+        <label for="prestation">Prestation : *</label>
+        <select id="prestation" formControlName="titre"  class="form-control" required>
+          <option value="" disabled selected>Sélectionnez une prestation</option>
+          <option value="FORFAIT RÉVISION">FORFAIT RÉVISION</option>
+          <option value="FORFAIT FREINAGE">FORFAIT FREINAGE</option>
+          <option value="FORFAIT AMORTISSEUR">FORFAIT AMORTISSEUR</option>
+          <option value="FORFAIT EMBRAYAGE">FORFAIT EMBRAYAGE</option>
+          <option value="DÉMARRAGE">DÉMARRAGE</option>
+          <option value="FORFAIT KIT DE DISTRIBUTION">FORFAIT KIT DE DISTRIBUTION</option>
+          <option value="DIRECTION">DIRECTION</option>
+          <option value="FORFAIT ÉCHAPPEMENT">FORFAIT ÉCHAPPEMENT</option>
+          <option value="FORFAIT CLIMATISATION">FORFAIT CLIMATISATION</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="images">Entrez les pièces jointes (images uniquement) :</label>
+        <input type="file" id="images" (change)="onFileChange($event)" multiple accept="image/*" class="form-control">
+      </div>
+      
+      
+      <div class="form-group">
+        <label for="desc">Description : </label>
+        <textarea id="desc" formControlName="desc" class="form-control"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="voiturepret">Voiture de prêt 20$ par jour : </label>
+        <input id="voiturepret" formControlName="voiturepret" type="checkbox">
+      </div>
+      
+
+      <div class="d1">
+        <button type="submit" class="btn btn-success">Ajouter</button>
+        <button type="button" class="btn btn-secondary" (click)="requestQuote()">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<app-footer></app-footer>

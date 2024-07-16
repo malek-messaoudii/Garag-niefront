@@ -1,0 +1,46 @@
+<app-barre2></app-barre2>
+<app-sidebar></app-sidebar>
+<div>
+    <img alt="" src="../../assets/contact.png"  class="contact border"  width="100%" height="400px"/>
+</div> <br> <br>
+<div class="lol">
+    <div class="contact-form-container">
+        <p class="form-title">Veuillez remplir les champs ci-dessous :</p>
+        <form #contactForm="ngForm" (ngSubmit)="handleSubmit(contactForm)">
+          <div class="form-group">
+            <label for="name">Nom : *</label>
+            <input type="text" id="name" name="name" [(ngModel)]="formData.nom" required placeholder="Votre nom">
+          </div>
+          <div class="form-group">
+            <label for="name">Prénom : *</label>
+            <input type="text" id="name" name="prenom" [(ngModel)]="formData.prenom" required placeholder="Votre prénom">
+          </div>
+          <div class="form-group">
+            <label for="email">Email :</label>
+            <input type="email" id="email" name="email" [(ngModel)]="formData.email" required placeholder="Votre adresse email">
+          </div>
+          <div class="form-group">
+            <label for="email">Téléphone : *</label>
+            <input type="tel" id="tel" name="tel" [(ngModel)]="formData.telephone" required placeholder="Votre numéro de téléphone">
+          </div>
+          <div class="form-group">
+            <label for="message">Message :</label>
+            <textarea id="message" name="message" [(ngModel)]="formData.message" required placeholder="Votre message"></textarea>
+          </div>
+          <button type="submit" class="submit-button">Envoyer</button>
+        </form>
+      </div>
+      <div class="ji">
+        <h4 class="ji1"> Service commercial :  </h4>
+         <mat-icon> check_icon </mat-icon>    M. Johnny CHANTEAU <br>
+         <mat-icon> check_icon </mat-icon>   Melle Gwenaelle GILLES
+         <br>  <br> <br> 
+
+        <p> <b> Tel : </b> 01 79 72 79 90</p>
+        <p> <b> Fax : </b> 09 81 38 46 78</p>
+
+      </div>    
+        
+</div> <br> <br> <br>
+<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d5231.950157785062!2d2.344292!3d49.030081!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e64264f8e9c637%3A0xca2e5e74b748c376!2s1%20Rue%20Descartes%2C%2095330%20Domont%2C%20France!5e0!3m2!1sfr!2stn!4v1719136555571!5m2!1sfr!2stn" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+<app-footer></app-footer>

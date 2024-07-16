@@ -1,0 +1,35 @@
+<app-navbar></app-navbar>
+<div class="login">
+  <div class="div1">
+    <div class="kol">
+      <mat-icon class="kol">account_circle</mat-icon>
+    </div>
+    <div class="tex">
+      <h4 id="ll2"><b>Avec</b> le programme de fidélite <b>Garagénie,</b> profitez de l'entretien automobile moins cher.<br />Des <b>promotions</b> et des services gratuits toutes l'année.</h4>
+    </div>
+  </div>
+  <div class="div2">
+    <div id="log">
+      <h2 id="ll">Connectez-vous</h2>
+    </div><br><br>
+    <form class="login-form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="email">Adresse email : *</label>
+        <input type="email" id="email" name="email" required [(ngModel)]="email" placeholder="Entrer votre adresse email">
+      </div>
+      <div class="form-group">
+        <label for="mdp">Mot de passe : *</label>
+        <input type="password" id="mdp" name="mdp" required [(ngModel)]="mdp" placeholder="Entrer votre mot de passe">
+      </div>
+      <div id='mdpo'>
+        <a routerLink="/pass">Mot de passe oublié?</a>
+      </div><br><br>
+      <button type="submit" class="btn">Se connecter</button>
+    </form><br><br>
+    <div id='creer'>
+      <p class='parag'>Vous n'avez pas un compte ?</p>
+      <a routerLink='/signup'>Créer maintenant</a>
+    </div>
+  </div>
+</div><br><br><br><br>
+<app-footer></app-footer>

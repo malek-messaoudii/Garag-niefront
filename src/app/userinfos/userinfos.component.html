@@ -1,0 +1,191 @@
+<app-sidebar></app-sidebar>
+<div class="m1">
+  Bienvenue {{ userData.nom }} {{ userData.prenom }} dans votre espace client
+</div>
+
+<h2> Mon profil </h2>
+<div class="form-con">
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="custom-for">
+    <div class="form-group">
+      <label for="typeClient">Type de client :</label>
+      <input type="text" id="typeClient" formControlName="typeClient" />
+    </div>
+    <div class="form-group">
+      <label for="nom">Nom :</label>
+      <input type="text" id="nom" formControlName="nom" />
+    </div>
+    <div class="form-group">
+      <label for="prenom">Prénom :</label>
+      <input type="text" id="prenom" formControlName="prenom" />
+    </div>
+    <div class="form-group">
+      <label for="email">E-mail :</label>
+      <input type="email" id="email" formControlName="email" />
+    </div>
+    <div class="form-group">
+      <label for="tel">Numéro de téléphone :</label>
+      <input type="tel" id="tel" formControlName="telephone" />
+    </div>
+    <div class="form-group">
+      <label for="datenais">Date de naissance :</label>
+      <input type="date" id="datenais" formControlName="datenais" />
+    </div>
+    <div class="form-group">
+      <label for="codep">Code Postal :</label>
+      <input type="text" id="codep" formControlName="codePostal" />
+    </div>
+    <div class="form-group">
+      <label for="mdp">Mot de passe :</label>
+      <input type="password" id="mdp" formControlName="motDePasse" />
+    </div>
+    <div class="form-group">
+      <label for="cmdp">Confirmer mot de passe :</label>
+      <input type="password" id="cmdp" formControlName="confirmerMotDePasse" />
+    </div>
+    <div id="good" class="good">
+      <button class="btn7" type="submit" id="gd">Confirmer</button>
+    </div>
+  </form>
+</div>
+
+<div id="d7">
+  <button id="btn4" (click)="handleLogout()">
+    Déconnexion <mat-icon>logout_icon</mat-icon>
+  </button>
+</div>
+
+<div class="actions">
+  <button class="bn632-hover bn26" (click)="requestQuote()">DEMANDER UN DEVIS</button>
+  <button class="bn632-hover bn26" (click)="scheduleAppointment()">PRENDRE UN RDV</button>
+</div>
+<div *ngIf="showAddForm1" class="overlay">
+  <div class="popup-form">
+    <h3 class="hh">Prendre un rendez-vous</h3>
+    <form [formGroup]="addrdvForm" (ngSubmit)="addrdv()">
+      <div class="form-group">
+        <label for="vehicule">Choisissez votre véhicule : *</label>
+        <select id="vehicule" formControlName="vehicule" class="form-control">
+          <option value="" disabled selected>Sélectionnez un véhicule</option>
+          <option *ngFor="let vehicule of vehicules" [value]="vehicule._id">{{ vehicule.immatriculation }} - {{ vehicule.make }}</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="numdevis">Numéro de devis : *</label>
+        <input id="numdevis" formControlName="numdevis" class="form-control" placeholder="Entrez le numéro de devis">
+      </div>
+            
+      <div class="form-group">
+        <label for="datesouhaite">Date de rendez-vous souhaité : *</label>
+        <input id="datesouhaite" formControlName="datesouhaite" class="form-control" type="date" placeholder="Sélectionnez la date du rdv souhaité">
+      </div>
+      
+      <div class="form-group">
+        <label for="heuresouhaite">Heure de rendez-vous souhaité : *</label>
+        <input id="heuresouhaite" formControlName="heuresouhaite" class="form-control" type="number" placeholder="Entrez l'heure du rdv souhaité">
+      </div>
+
+      <div class="form-group">
+        <label for="prestation">Prestation : *</label>
+        <select id="prestation" formControlName="titrepres"  class="form-control" required>
+          <option value="" disabled selected>Sélectionnez une prestation</option>
+          <option value="FORFAIT RÉVISION">FORFAIT RÉVISION</option>
+          <option value="FORFAIT FREINAGE">FORFAIT FREINAGE</option>
+          <option value="FORFAIT AMORTISSEUR">FORFAIT AMORTISSEUR</option>
+          <option value="FORFAIT EMBRAYAGE">FORFAIT EMBRAYAGE</option>
+          <option value="DÉMARRAGE">DÉMARRAGE</option>
+          <option value="FORFAIT KIT DE DISTRIBUTION">FORFAIT KIT DE DISTRIBUTION</option>
+          <option value="DIRECTION">DIRECTION</option>
+          <option value="FORFAIT ÉCHAPPEMENT">FORFAIT ÉCHAPPEMENT</option>
+          <option value="FORFAIT CLIMATISATION">FORFAIT CLIMATISATION</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="desc">Description : </label>
+        <textarea id="desc" formControlName="desc" class="form-control"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="voiturepret">Voiture de prêt : </label>
+        <input id="voiturepret" formControlName="voiturepret" type="checkbox">
+      </div>
+      
+      <div class="form-group">
+        <label for="email">E-mail : *</label>
+        <input type="email" id="email" formControlName="email" class="form-control" placeholder="Entrez votre e-mail">
+      </div>
+
+      <div class="d1">
+        <button type="submit" class="btn btn-success">Ajouter</button>
+        <button type="button" class="btn btn-secondary" (click)="scheduleAppointment()">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+
+<div *ngIf="showAddForm2" class="overlay">
+  <div class="popup-form">
+    <h3 class="hh">Demander un devis</h3>
+    <form [formGroup]="adddevisForm" (ngSubmit)="adddevis()">
+      <div class="form-group">
+        <label for="typedemande">Type de demande : *</label>
+        <input id="typedemande" formControlName="typedemande" class="form-control" readonly>
+      </div>
+      <div class="form-group">
+        <label for="email">E-mail : *</label>
+        <input type="email" id="email" formControlName="email" class="form-control"  readonly>
+      </div>
+
+      <div class="form-group">
+        <label for="vehicule">Choisissez votre véhicule : *</label>
+        <select id="vehicule" formControlName="vehicule" class="form-control">
+          <option value="" disabled selected>Sélectionnez un véhicule</option>
+          <option *ngFor="let vehicule of vehicules" [value]="vehicule._id">{{ vehicule.immatriculation }} - {{ vehicule.make }}</option>
+        </select>
+      </div>
+      
+
+      <div class="form-group">
+        <label for="prestation">Prestation : *</label>
+        <select id="prestation" formControlName="titre"  class="form-control" required>
+          <option value="" disabled selected>Sélectionnez une prestation</option>
+          <option value="FORFAIT RÉVISION">FORFAIT RÉVISION</option>
+          <option value="FORFAIT FREINAGE">FORFAIT FREINAGE</option>
+          <option value="FORFAIT AMORTISSEUR">FORFAIT AMORTISSEUR</option>
+          <option value="FORFAIT EMBRAYAGE">FORFAIT EMBRAYAGE</option>
+          <option value="DÉMARRAGE">DÉMARRAGE</option>
+          <option value="FORFAIT KIT DE DISTRIBUTION">FORFAIT KIT DE DISTRIBUTION</option>
+          <option value="DIRECTION">DIRECTION</option>
+          <option value="FORFAIT ÉCHAPPEMENT">FORFAIT ÉCHAPPEMENT</option>
+          <option value="FORFAIT CLIMATISATION">FORFAIT CLIMATISATION</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="images">Entrez les pièces jointes (images uniquement) :</label>
+        <input type="file" id="images" (change)="onFileChange($event)" multiple accept="image/*" class="form-control">
+      </div>
+      
+      
+      <div class="form-group">
+        <label for="desc">Description : </label>
+        <textarea id="desc" formControlName="desc" class="form-control"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="voiturepret">Voiture de prêt 20$ par jour : </label>
+        <input id="voiturepret" formControlName="voiturepret" type="checkbox">
+      </div>
+      
+
+      <div class="d1">
+        <button type="submit" class="btn btn-success">Ajouter</button>
+        <button type="button" class="btn btn-secondary" (click)="requestQuote()">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,12 @@
+<div class="prestations-container">
+  <div><h1 id="nosval">Obtenez votre devis en 4 clics</h1></div> <br> <br>
+  <div class="book">
+    <div *ngFor="let prestation of prestations" class="prestation-card" (click)="onPrestationClick(prestation)">
+
+      <div class="prestation-image">
+        <img [src]="prestation.image" alt="{{ prestation.titre }}">
+      </div>
+      <h3>{{ prestation.titre }}</h3>
+    </div>
+  </div>
+</div>

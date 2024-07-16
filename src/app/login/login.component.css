@@ -1,0 +1,113 @@
+.login{
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+    font-size: 16px;
+    
+
+}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+.div1{
+    border: 1px black;
+    height: 510px;
+    width: 400px;
+    background: linear-gradient(135deg, #FFA500 0%, #FFD700 100%);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+    
+
+}
+#ll{
+    font-family: "Poppins", sans-serif;
+    font-weight: bold;
+    font-style: normal;
+    margin-top: 20px;
+    font-size: 30px;
+}
+
+.tex{
+  display: flex;
+  justify-content: center;
+  padding: 18px;
+  align-items: center;
+  text-align: center;
+  margin-top: -40px;
+}
+#ll2{
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
+    margin-top: 120px;
+    font-size: larger;  
+}
+#log {
+    display: flex;
+    justify-content: center;
+}
+.div2{
+    border: 1px black;
+    height: 510px;
+    width: 500px;
+    background: #fff;
+    padding: 30px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+    font-family: "Poppins", sans-serif;
+  }
+
+
+  
+
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .btn {
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-family: "Archivo Black", sans-serif;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .btn:hover {
+    background: linear-gradient(135deg, #FFA500 0%, #FFD700 100%);
+  }
+
+  #mdpo{
+    display: flex;
+    justify-content: end;
+  }
+
+  #creer{
+    display: inline-flex;
+    margin-left: 50px;
+}
+.parag{
+    margin-right: 20px;
+}
+
+.kol{
+font-size: 200px;
+margin-left: 50px;
+margin-top: 40px;
+}

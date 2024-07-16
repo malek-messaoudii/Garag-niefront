@@ -1,0 +1,262 @@
+.m1{
+    display: inline-flex;
+    justify-content: flex-end;
+  }
+  .m2 {
+      max-width: 600px;
+      margin: 0 80px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+      font-family: "Poppins", sans-serif;
+      margin-top: 50px;
+      margin-bottom: 40px;
+      width: 700px;
+    }
+    .prestation{
+      margin-top: 50px;
+      margin-left: 50px;
+      color: #007bff;
+    }
+    .desc {
+      display: flex;
+      margin-top:10px ;
+    }
+    .logo2 {
+      
+      transition: 1s;
+    }
+    
+    .logo2:hover {
+        scale: 1.8;
+      }
+    .img{
+      margin-left: 200px;
+      margin-top: 40px;
+    }
+    
+    .desc mat-icon {
+      margin-right: 8px; 
+    }
+  
+    .prestation>h3{
+      font-family: "Archivo Black", sans-serif;
+      font-size: 25px;
+      margin-bottom: 40px;
+    }
+    .prestation>p{
+      font-family: "Poppins", sans-serif;
+      font-size: 25px;
+  
+    }
+    .background {
+      background-image: url('../../assets/voit.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      width: 100%;
+      z-index: 4;
+      height: 50vh;
+      line-height: normal;
+    }
+  
+    h1{
+      font-family: "Archivo Black", sans-serif;
+      margin-left: 40px;
+      font-size: 35px;
+      line-height: 45px;
+
+    }
+    
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+      font-size: 25px;
+      font-family: "Archivo Black", sans-serif;
+  
+    }
+    
+    h6 {
+      text-align: start;
+      color: #666;
+      margin-bottom: 20px;
+      font-size: 15px;
+    }
+    
+    /* Form styles */
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    label {
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333;
+    }
+    
+    select, input {
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    
+    select:focus, input:focus {
+      border-color: #007bff;
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+    
+    /* Button styles */
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    button:hover {
+      background-color: #0056b3;
+    }
+    @media (max-width: 768px) {
+      div {
+        padding: 15px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      div {
+        padding: 10px;
+      }
+    
+      button {
+        font-size: 14px;
+        padding: 8px 12px;
+      }
+    
+      select, input {
+        font-size: 14px;
+        padding: 8px;
+      }
+    }
+    
+    .bn632-hover {
+      width: 160px;
+      font-size: 16px;
+      font-weight: 600;
+      color: black;
+      cursor: pointer;
+      margin: 20px;
+      height: 55px;
+      text-align:center;
+      border: none;
+      background-size: 300% 100%;
+      border-radius: 10px;
+      moz-transition: all .4s ease-in-out;
+      -o-transition: all .4s ease-in-out;
+      -webkit-transition: all .4s ease-in-out;
+      transition: all .4s ease-in-out;    
+      font-family: "Archivo Black", sans-serif;
+  
+    }
+    
+    .bn632-hover:hover {
+      background-position: 100% 0;
+      moz-transition: all .4s ease-in-out;
+      -o-transition: all .4s ease-in-out;
+      -webkit-transition: all .4s ease-in-out;
+      transition: all .4s ease-in-out;
+    }
+    
+    .bn632-hover:focus {
+      outline: none;
+    }
+    
+    .bn632-hover.bn26 {
+      background-image: linear-gradient(
+        to right,
+        #FFA500,
+        #FFD700,
+        #FFA500,
+        #FFD700
+      );
+      box-shadow: 0 4px 15px 0      #FFA500;
+      margin-top: 20px;
+    }
+    .ty {
+      margin-left: 10px;
+    }
+    .vehicle-info {
+      background-color: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      height: 400px;
+      margin-top: 50px;
+      margin-left: 100px;
+      width: 400px;
+    }
+    
+    .vehicle-info:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .vehicle-info h3 {
+      font-size: 1.8em;
+      margin-bottom: 15px;
+      color: #333;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 10px;
+      font-family: "Archivo Black", sans-serif;
+    }
+    
+    .vehicle-info p {
+      font-size: 1.2em;
+      margin: 10px 0;
+      color: #555;
+      font-family: "Poppins", sans-serif;
+    }
+    
+    .vehicle-info p span {
+      font-weight: bold;
+      color: #007bff;
+    }
+    
+      .btn {
+        display: inline-flex;
+        margin-right: 50px;
+      }
+      .info-item {
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+      }
+      
+      .info-item mat-icon {
+        margin-right: 10px;
+        color: #007bff;
+      }
+      
+      .info-item p {
+        font-size: 1.2em;
+        color: #555;
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+      }
+      
+      .info-item p span {
+        font-weight: bold;
+        color: #007bff;
+      }

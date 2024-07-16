@@ -1,0 +1,129 @@
+<app-navbar></app-navbar>
+
+<div class="background">
+  <h1>Obtenez votre devis express en quelques <br> minutes</h1>
+</div>
+
+<div class="form-container">
+  <form (ngSubmit)="submitForm(devisForm)" #devisForm="ngForm">
+    <fieldset>
+      <legend>Informations Personnelles</legend>
+      <div>
+        <label for="type">Type de Client : *</label>
+        <select id="type" name="type" [(ngModel)]="formData.utilisateur.type" required>
+          <option value="particulier" selected>Particulier</option>
+          <option value="entreprise">Entreprise</option>
+        </select>
+      </div>
+      <div *ngIf="formData.utilisateur.type === 'particulier'">
+        <div>
+          <label for="nom">Nom : *</label>
+          <input type="text" id="nom" name="nom" [(ngModel)]="formData.utilisateur.nom" placeholder="Entrez votre nom" required>
+        </div>
+        <div>
+          <label for="prenom">Prénom : *</label>
+          <input type="text" id="prenom" name="prenom" [(ngModel)]="formData.utilisateur.prenom" placeholder="Entrez votre prénom" required>
+        </div>
+        <div>
+          <label for="email">Email : *</label>
+          <input type="email" id="email" name="email" [(ngModel)]="formData.utilisateur.email" placeholder="Entrez votre email" required>
+        </div>
+        <div>
+          <label for="telephone">Téléphone : *</label>
+          <input type="tel" id="telephone" name="telephone" [(ngModel)]="formData.utilisateur.telephone" placeholder="Entrez votre numéro de téléphone" required>
+        </div>
+        <div>
+          <label for="adresse">Adresse : *</label>
+          <input type="text" id="adresse" name="adresse" [(ngModel)]="formData.utilisateur.adresse" placeholder="Entrez votre adresse" required>
+        </div>
+        <div>
+          <label for="codePostal">Code postal : *</label>
+          <input type="text" id="zipcode" name="codePostal" [(ngModel)]="formData.utilisateur.codePostal" placeholder="Entrez votre code postal" required>
+        </div>
+      </div>
+      <div *ngIf="formData.utilisateur.type === 'entreprise'">
+        <div>
+          <label for="nom">Nom : *</label>
+          <input type="text" id="contactNom" name="nom" [(ngModel)]="formData.utilisateur.nom" placeholder="Entrez votre nom" required>
+        </div>
+        <div>
+          <label for="prenom">Prénom : *</label>
+          <input type="text" id="contactPrenom" name="prenom" [(ngModel)]="formData.utilisateur.prenom" placeholder="Entrez votre prenom" required>
+        </div>
+        <div>
+          <label for="nomEntreprise">Nom de l'Entreprise : *</label>
+          <input type="text" id="nomEntreprise" name="nomEntreprise" [(ngModel)]="formData.utilisateur.nomEntreprise" placeholder="Entrez le nom de l'entreprise" required>
+        </div>
+        <div>
+          <label for="siret">Numéro de SIRET : *</label>
+          <input type="text" id="siret" name="siret" [(ngModel)]="formData.utilisateur.siret" placeholder="Entrez le numéro SIRET" required>
+        </div>
+      <div>
+        <label for="email">Email : *</label>
+        <input type="email" id="email" name="email" [(ngModel)]="formData.utilisateur.email" placeholder="Entrez votre email" required>
+      </div>
+      <div>
+        <label for="telephone">Téléphone : *</label>
+        <input type="tel" id="telephone" name="telephone" [(ngModel)]="formData.utilisateur.telephone" placeholder="Entrez votre numéro de téléphone" required>
+      </div>
+      <div>
+        <label for="adresse">Adresse : *</label>
+        <input type="text" id="adresse" name="adresse" [(ngModel)]="formData.utilisateur.adresse" placeholder="Entrez votre adresse" required>
+      </div>
+      <div>
+        <label for="codePostal">Code postal : *</label>
+        <input type="text" id="zipcode" name="codePostal" [(ngModel)]="formData.utilisateur.codePostal" placeholder="Entrez votre code postal" required>
+      </div>
+    </div>
+
+      <div>
+        <label for="titre">Prestation : *</label>
+        <select id="prestation" name="titre" [(ngModel)]="formData.prestation.titre" required>
+          <option value="FORFAIT RÉVISION">FORFAIT RÉVISION</option>
+          <option value="FORFAIT FREINAGE">FORFAIT FREINAGE</option>
+          <option value="FORFAIT AMORTISSEUR">FORFAIT AMORTISSEUR</option>
+          <option value="FORFAIT EMBRAYAGE">FORFAIT EMBRAYAGE</option>
+          <option value="DÉMARRAGE">DÉMARRAGE</option>
+          <option value="FORFAIT KIT DE DISTRIBUTION">FORFAIT KIT DE DISTRIBUTION</option>
+          <option value="DIRECTION">DIRECTION</option>
+          <option value="FORFAIT ÉCHAPPEMENT">FORFAIT ÉCHAPPEMENT</option>
+          <option value="FORFAIT CLIMATISATION">FORFAIT CLIMATISATION</option>
+        </select>
+      </div>
+      <div>
+        <label for="desc">Description : *</label>
+        <textarea id="description" name="desc" [(ngModel)]="formData.prestation.desc" placeholder="Décrivez la prestation souhaitée" required></textarea>
+      </div>
+
+    </fieldset>
+    
+    <!-- Partie 2: Informations sur le Véhicule -->
+    <fieldset>
+      <legend>Informations sur le Véhicule</legend>
+      <div>
+        <label for="immatriculation">Immatriculation : *</label>
+        <input type="text" id="immatriculation" name="immatriculation" [(ngModel)]="formData.vehicule.immatriculation" placeholder="Entrez l'immatriculation" required>
+      </div>
+      <div>
+        <label for="kilo">Kilométrage : *</label>
+        <input type="number" id="kilometrage" name="kilo" [(ngModel)]="formData.vehicule.kilo" placeholder="Entrez le kilométrage" required>
+      </div>
+      <div>
+        <label for="datederniererevision">Date Dernière Révision : *</label>
+        <input type="date" id="dateDerniereRevision" name="datederniereeevision" [(ngModel)]="formData.datedernierrevision" required>
+      </div>
+    </fieldset>
+    
+    <!-- Bouton de Soumission -->
+    <button type="submit"  class="bn632-hover bn26">Envoyer</button>
+  </form>
+  <div class="p1">
+    <h5 class="p2">Après la soumission de votre demande de devis, nos experts l'examineront rapidement. <br> Vous serez contacté dès que votre devis sera validé.<br> Merci de votre confiance, Garagénie s'engage à vous offrir une expérience rapide et efficace.</h5>
+    <br> <br>
+    <div>
+      <img alt="" src="../../assets/logo2.png" width="420" height="150" class="logo1" />
+  </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

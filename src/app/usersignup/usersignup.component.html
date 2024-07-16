@@ -1,0 +1,233 @@
+<app-navbar></app-navbar>
+<div>
+    <div class="usersignup">
+        <h2 class="tyt"><b>Créer votre compte</b></h2>
+    </div>
+    <br />
+    <br />
+    <div class="identification">
+        <div class="dov">
+            <input type="radio" name="personneType" value="client" (change)="handlePersonTypeChange($event)" class="radio-input" checked />
+            <label for="rb1"> Vous êtes un client ?</label>
+        </div>
+        <div class="dov">
+            <input type="radio" name="personneType" value="garagiste" (change)="handlePersonTypeChange($event)" class="radio-input" />
+            <label for="rb2"> Vous êtes un garagiste ?</label>
+        </div>
+    </div>
+
+    <div class="toogle">
+        <div class="toggle-btn-group" *ngIf="selectedPersonType === 'client'">
+            <input type="radio" id="physique" name="personneCategory" value="physique" (change)="handlePersonCategoryChange($event)" checked>
+            <label for="physique" class="toggle-btn">Particulier</label>
+            <input type="radio" id="morale" name="personneCategory" value="morale" (change)="handlePersonCategoryChange($event)">
+            <label for="morale" class="toggle-btn">Entreprise</label>
+        </div>
+        <br/><br/>
+        <div *ngIf="isClientPhysiqueSelected()">
+            <form (ngSubmit)="register($event)">
+                <!-- Client Physique -->
+                <div class="form-group">
+                    <label for="firstName">Nom : *</label>
+                    <input id="firstName" type="text" name="nom" [(ngModel)]="formData.nom" required placeholder="Entrer votre nom">
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Prénom : *</label>
+                    <input id="lastName" type="text" name="prenom" [(ngModel)]="formData.prenom" required placeholder="Entrer votre prénom">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Téléphone : * </label>
+                    <input id="phone" type="tel" name="telephone" [(ngModel)]="formData.telephone" required placeholder="Entrer votre numéro de téléphone">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email: *</label>
+                    <input id="email" type="email" name="email" [(ngModel)]="formData.email" required placeholder="Entrer votre adresse email">
+                </div>
+                <div class="form-group">
+                    <label for="datenais">Date de naissance : *</label>
+                    <input id="datenais" type="date" name="datenais" [(ngModel)]="formData.datenais" required placeholder="Entrer votre date de naissance">
+                </div>
+                <div class="form-group">
+                    <label for="address">Adresse : *</label>
+                    <input id="address" type="text" name="adresse" [(ngModel)]="formData.adresse" required placeholder="Entrer votre adresse">
+                </div>
+                <div class="form-group">
+                    <label for="postalCode">Code Postal : *</label>
+                    <input id="postalCode" type="text" name="codep" [(ngModel)]="formData.codep" required placeholder="Entrer votre code postal">
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de Passe : *</label>
+                    <input id="password" type="password" name="mdp" [(ngModel)]="formData.mdp" required placeholder="Entrer votre mot de passe">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirmation de Mot de Passe : *</label>
+                    <input id="confirmPassword" type="password" name="cmdp" [(ngModel)]="formData.cmdp" required placeholder="Confirmer votre mot de passe">
+                </div>
+                <div class="cb1">
+                    <label><input type="checkbox" required> J'ai lu et j'accepte les termes et les conditions d'utilisation</label>
+                </div>
+                <div class="btr2">
+                    <button type="submit" class="bn632-hover bn26">Créer</button>
+                </div>
+            </form>
+            <div class="tut2">
+                <img alt="" src="../../assets/logo3.png" width="165" height="165" class="logo2" /> <br/> <br/> <br/>
+                <h5 id="ll2"> <b>Avec </b> le programme de fidélite <b> Garagénie,</b> profitez de l'entretien automobile moins cher. <br/> <br/> Des <b>promotions </b> et des services gratuites toutes l'année.</h5>
+            </div>
+        </div>
+
+        <div *ngIf="isClientMoraleSelected()">
+            <form (ngSubmit)="register($event)">
+                <!-- Client Morale -->
+                <div class="form-group">
+                    <label for="Name">Nom : *</label>
+                    <input id="Name" type="text" name="nomsoc" [(ngModel)]="formData.nom" required placeholder="Entrer votre nom ">
+                </div>
+                <div class="form-group">
+                    <label for="siret">Prénom : *</label>
+                    <input id="siret" type="text" name="prenom" [(ngModel)]="formData.prenom" required placeholder="Entrer votre prénom">
+                </div>
+                <div class="form-group">
+                    <label for="companyName">Nom de l'entreprise : *</label>
+                    <input id="companyName" type="text" name="nomg" [(ngModel)]="formData.nomsoc" required placeholder="Entrer le nom de votre société">
+                </div>
+                <div class="form-group">
+                    <label for="siret">Numéro de SIRET : *</label>
+                    <input id="siret" type="number" name="nums" [(ngModel)]="formData.nums" required placeholder="Entrer le numéro de SIRET">
+                </div>
+                <div class="form-group">
+                    <label for="interlocuteur">Nom de l'interlocuteur : *</label>
+                    <input id="interlocuteur" type="text" name="prenom" [(ngModel)]="formData.nomg" required placeholder="Entrer le nom de votre interlocuteur">
+                </div>
+                <div class="form-group">
+                    <label for="telClientMorale">Téléphone : *</label>
+                    <input id="telClientMorale" type="tel" name="telephone" [(ngModel)]="formData.telephone" required placeholder="Entrer le numéro de téléphone">
+                </div>
+                <div class="form-group">
+                    <label for="emailClientMorale">Email : *</label>
+                    <input id="emailClientMorale" type="email" name="email" [(ngModel)]="formData.email" required placeholder="Entrer votre adresse email">
+                </div>
+                <div class="form-group">
+                    <label for="adresseClientMorale">Adresse : *</label>
+                    <input id="adresseClientMorale" type="text" name="adresse" [(ngModel)]="formData.adresse" required placeholder="Entrer votre adresse">
+                </div>
+                <div class="form-group">
+                    <label for="postalCodeClientMorale">Code Postal : *</label>
+                    <input id="postalCodeClientMorale" type="text" name="codep" [(ngModel)]="formData.codep" required placeholder="Entrer votre code postal">
+                </div>
+                <div class="form-group">
+                    <label for="passwordClientMorale">Mot de Passe : *</label>
+                    <input id="passwordClientMorale" type="password" name="mdp" [(ngModel)]="formData.mdp" required placeholder="Entrer votre mot de passe">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPasswordClientMorale">Confirmation de Mot de Passe : *</label>
+                    <input id="confirmPasswordClientMorale" type="password" name="cmdp" [(ngModel)]="formData.cmdp" required placeholder="Confirmer votre mot de passe">
+                </div>
+                <div class="cb1">
+                    <label><input type="checkbox" required> J'ai lu et j'accepte les termes et les conditions d'utilisation</label>
+                </div>
+                <div class="btr3">
+                    <button type="submit" class="bn632-hover bn26">Créer </button>
+                </div>
+            </form>
+            <div class="tut">
+                <img alt="" src="../../assets/logo3.png" width="165" height="165" class="logo2" /> <br/> <br/> <br/>
+                <h5 id="ll2"> <b>Avec </b> le programme <b>Garagéniepro</b>, profitez de l'entretien automobile moins cher. Bénéficiez d'un <b>service pro </b> spécialement dédié aux entreprises.</h5> <br/>
+                <ul id="ll2">
+                    <li>Une plateforme web.</li>
+                    <li>La gestion de votre parc automobile en ligne.</li>
+                    <li>Des avantages personnalisés.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div *ngIf="isGaragisteSelected()">
+            <form (ngSubmit)="register($event)">
+                <!-- Garagiste -->
+                <div class="form-group">
+                    <label for="societe">Nom de la société : * </label>
+                    <input id="societe" type="text" name="nomsoc" [(ngModel)]="formData.noms" required placeholder="Entrer le nom de votre société">
+                </div>
+                <div class="form-group">
+                    <label for="siret">Numéro SIRET : *</label>
+                    <input id="siret" type="number" name="nums" [(ngModel)]="formData.nums" required placeholder="Entre le numéro de SIRET">
+                </div>
+                <div class="form-group">
+                    <label for="codeNAF">Code NAF : *</label>
+                    <input id="codeNAF" type="number" name="nafs" [(ngModel)]="formData.nafc" required placeholder="Entrer le code NAF">
+                </div>
+                <div class="form-group">
+                    <label for="telGaragiste">Téléphone : *</label>
+                    <input id="telGaragiste" type="tel" name="telephone" [(ngModel)]="formData.telephone" required placeholder="Entrer votre numéro de téléphone">
+                </div>
+                <div class="form-group">
+                    <label for="fax">Fax :</label>
+                    <input id="fax" type="tel" name="fax" [(ngModel)]="formData.fax" placeholder="Entrer votre numéro de fax (optionnel)">
+                </div>
+                <div class="form-group">
+                    <label for="siteWeb">Site Web :</label>
+                    <input id="siteWeb" type="url" name="siteweb" [(ngModel)]="formData.website" placeholder="Entrer l'URL de votre site web (optionnel)">
+                </div>
+                <div class="form-group">
+                    <label for="adresseGaragiste">Adresse : * </label>
+                    <input id="adresseGaragiste" type="text" name="adresse" [(ngModel)]="formData.adresse" required placeholder="Entrer votre adresse">
+                </div>
+                <div class="form-group">
+                    <label for="codePostalGaragiste">Code Postal : *</label>
+                    <input id="codePostalGaragiste" type="text" name="codep" [(ngModel)]="formData.codep" required placeholder="Entrer votre code postal">
+                </div>
+                <div class="form-group">
+                    <label for="civilite">Civilité:</label>
+                    <select id="civilite" name="civilite" [(ngModel)]="formData.genre" required>
+                        <option value="Monsieur">Monsieur</option>
+                        <option value="Madame">Madame</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="nomGaragiste">Nom : *</label>
+                    <input id="nomGaragiste" type="text" name="nom" [(ngModel)]="formData.nom" required placeholder="Entrer votre nom">
+                </div>
+                <div class="form-group">
+                    <label for="prenomGaragiste">Prénom : *</label>
+                    <input id="prenomGaragiste" type="text" name="prenom" [(ngModel)]="formData.prenom" required placeholder="Entrer votre prénom">
+                </div>
+                <div class="form-group">
+                    <label for="emailGaragiste">Email: *</label>
+                    <input id="emailGaragiste" type="email" name="email" [(ngModel)]="formData.email" required placeholder="Entrer votre adresse email">
+                </div>
+                <div class="form-group">
+                    <label for="identifiant">Identifiant : *</label>
+                    <input id="identifiant" type="number" name="identifiant" [(ngModel)]="formData.id" required placeholder="Entrer votre identifiant">
+                </div>
+                <div class="form-group">
+                    <label for="passwordGaragiste">Mot de Passe : *</label>
+                    <input id="passwordGaragiste" type="password" name="mdp" [(ngModel)]="formData.mdp" required placeholder="Entrer votre mot de passe">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPasswordGaragiste">Confirmation de Mot de Passe : *</label>
+                    <input id="confirmPasswordGaragiste" type="password" name="cmdp" [(ngModel)]="formData.cmdp" required placeholder="Confirmer votre mot de passe">
+                </div>
+                <div class="cb1">
+                    <label><input type="checkbox" required> J'ai lu et j'accepte les termes et les conditions d'utilisation</label>
+                </div>
+                <div class="btr1">
+                    <button type="submit" class="bn632-hover bn26">Créer </button>
+                </div>
+            </form>
+            <div class="tut3">
+                <img alt="" src="../../assets/logo3.png" width="165" height="165" class="logo2" /> <br/> <br/> <br/>
+                <h5 id="ll2"> <b>Grâce </b> au programme de fidélité <b>Garagénie</b>, <br> bénéficiez d'un <b>agenda détaillé </b> et de statistiques claires pour une <b>gestion optimale </b> de votre garage. <br/> <br/>Profitez de <b>promotions </b> exclusives et de services gratuits tout au long de l'année.</h5>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="btr">
+        <a>
+            <button class="bn632-hover bn26" id="boutton1" routerLink="/login">Retour</button>
+        </a>
+    </div>
+</div>
+<br/>
+<br/>
+<app-footer></app-footer>

@@ -1,0 +1,40 @@
+<app-navbar></app-navbar> <br/> <br/>   <br/> <br/> 
+<div class='toogle'>
+    <div class='connexion' id='connexion'>
+      <h1 class='title2 mt-lg-5'> Mot de passe oublié </h1>
+      <form (submit)="handleSendCode($event)">
+        <div class='inpu'> 
+          <br/> <br/>
+          <label for="mdp">Adresse email : *</label>
+          <input type="email" id="password1" name="email" required placeholder='Enter votre adresse mail' [(ngModel)]="email" />
+        </div>
+        <div id='sec'>
+          <button class='boutton1' type="submit" id='bttn'> Envoyer un code de réinitialisation </button>
+        </div>
+        <div *ngIf="codeSent">
+          <span id='spn'><a (click)="handleResendCode($event)" href='#'>Ré-envoyer un code de réinitialisation</a></span>
+        </div>
+      </form>
+  
+      <form (submit)="handleSubmitCode($event)"> 
+        <input type="number" id="code" name="code" required placeholder='Enter le code envoyé' [(ngModel)]="code" />
+        <button class='boutton1' type="submit" id='bttn'> Envoyer </button>
+      </form> 
+  
+      <br/>
+      <br/>
+      <br />
+      <div id='creer'>
+        <p class='parag'> Vous n'avez pas un compte ?</p>
+        <a routerLink='/signup'>Créer maintenant</a>
+      </div>
+      <br />
+    </div>
+  </div>
+  <div class='btr'>
+    <a> 
+      <button class='bn632-hover bn26' id='boutton1' routerLink="/login"> Retour </button>
+    </a>
+  </div>  <br/> <br/>   <br/> 
+  <app-footer></app-footer>
+  
