@@ -1,0 +1,138 @@
+<app-gmenu></app-gmenu>
+
+<div class="m1">
+  Mes mécaniciens
+</div>
+<div class="m3">
+  <h6> Vous trouvez ci-dessous la liste des mécaniciens : </h6>
+  <button (click)="toggleAddForm()" class="btn8"> Ajouter un nouveau mécanicien <mat-icon>construction_icon</mat-icon></button> 
+</div>
+
+<div *ngIf="showAddForm" class="overlay">
+  <div class="popup-form">
+    <h3 class="hh">Ajouter un mécanicien</h3>
+    <form [formGroup]="addMecanForm" (ngSubmit)="addMecanicien()">
+      <div class="form-group">
+        <label for="nom">Nom : *</label>
+        <input id="nom" formControlName="nom" class="form-control" placeholder="Entrez le nom">
+      </div>
+      <div class="form-group">
+        <label for="prenom">Prénom : *</label>
+        <input id="prenom" formControlName="prenom" class="form-control" placeholder="Entrez le prénom">
+      </div>
+      <div class="form-group">
+        <label for="email">E-mail : *</label>
+        <input id="email" formControlName="email" class="form-control" placeholder="Entrez l'e-mail">
+      </div>
+      <div class="form-group">
+        <label for="telephone">Téléphone : *</label>
+        <input id="telephone" formControlName="telephone" class="form-control" placeholder="Entrez le téléphone">
+      </div>
+      <div class="form-group">
+        <label for="status">Statut : *</label>
+        <select id="status" formControlName="status" class="form-control">
+          <option value="" disabled selected>Sélectionnez le statut</option>
+          <option *ngFor="let option of statut" [value]="option">{{ option }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="genre">Genre : *</label>
+        <select id="genre" formControlName="genre" class="form-control">
+          <option value="" disabled selected>Sélectionnez le genre</option>
+          <option *ngFor="let option of genre" [value]="option">{{ option }}</option>
+        </select>
+      </div>
+      <div class="d1">
+        <button type="submit" class="btn btn-success">Ajouter</button>
+        <button type="button" class="btn btn-secondary" (click)="toggleAddForm()">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <div *ngIf="mecanicien.length === 0" class="p1">
+    <h1>Pas encore de mécaniciens</h1> <mat-icon class="ico">report_icon</mat-icon>
+  </div>
+
+  <table *ngIf="mecanicien.length > 0" class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Civilité</th>
+        <th>Nom & prénom</th>
+        <th>E-mail</th>
+        <th>Téléphone</th>
+        <th>Statut</th>
+        <th>Modification</th>
+        <th>Suppression</th>
+        <th>Détails</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let mec of mecanicien">
+        <td>{{ mec.id }}</td>
+        <td>{{ mec.genre }}</td>
+        <td>{{ mec.nom }} {{ mec.prenom }}</td>
+        <td>{{ mec.email }}</td>
+        <td>{{ mec.telephone }}</td>
+        <td>
+          <mat-icon [ngClass]="{'text-success': mec.status === 'Actif', 'text-danger': mec.status !== 'Actif'}">check_circle</mat-icon>
+        </td>
+        <td>
+          <button class="btn btn-primary" (click)="openUpdateForm(mec)">Mettre à jour</button>
+        </td>
+        <td>
+          <button class="btn btn-danger" (click)="deleteMecanicien(mec._id)">Supprimer</button>
+        </td>
+        <td>
+          <button class="btn btn-info">Voir Détails</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="showUpdateForm" class="overlay">
+  <div class="popup-form">
+    <h3 class="hh">Mettre à jour un mécanicien</h3>
+    <form [formGroup]="updateMecanForm" (ngSubmit)="submitUpdatedMecanicien()">
+      <div class="form-group">
+        <label for="nom">Nom : *</label>
+        <input id="nom" formControlName="nom" class="form-control" placeholder="Entrez le nom">
+      </div>
+      <div class="form-group">
+        <label for="prenom">Prénom : *</label>
+        <input id="prenom" formControlName="prenom" class="form-control" placeholder="Entrez le prénom">
+      </div>
+      <div class="form-group">
+        <label for="email">E-mail : *</label>
+        <input id="email" formControlName="email" class="form-control" placeholder="Entrez l'e-mail">
+      </div>
+      <div class="form-group">
+        <label for="telephone">Téléphone : *</label>
+        <input id="telephone" formControlName="telephone" class="form-control" placeholder="Entrez le téléphone">
+      </div>
+      <div class="form-group">
+        <label for="status">Statut : *</label>
+        <select id="status" formControlName="status" class="form-control">
+          <option value="" disabled selected>Sélectionnez le statut</option>
+          <option *ngFor="let option of statut" [value]="option">{{ option }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="genre">Genre : *</label>
+        <select id="genre" formControlName="genre" class="form-control">
+          <option value="" disabled selected>Sélectionnez le genre</option>
+          <option *ngFor="let option of genre" [value]="option">{{ option }}</option>
+        </select>
+      </div>
+      <div class="d1">
+        <button type="submit" class="btn btn-success">Mettre à jour</button>
+        <button type="button" class="btn btn-secondary" (click)="toggleUpdateForm()">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<app-footer></app-footer>

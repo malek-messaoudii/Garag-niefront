@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 
 const backendURL = 'http://localhost:4000/user';
+const backendDevisURL = 'http://localhost:4000/devis';
 
 @Component({
   selector: 'app-step4',
@@ -14,26 +15,10 @@ const backendURL = 'http://localhost:4000/user';
 export class Step4Component implements OnInit {
 
   @Output() prevStep = new EventEmitter<void>();
-  @Output() submitForm = new EventEmitter<any>();  
   @Input() prestation: any;
   @Input() vehicule: any;
   @Input() datedernierrevision: any;
-  @Input() utilisateur: any;
-  userData: any = {
-    nom: '',
-    prenom: '',
-    telephone: '',
-    email: '',
-    adresse: '',
-    codep: '',
-    mdp: '',
-    cmdp: '',
-    role: '',
-    datenais: '',
-    typeClient: ''
-  };
   profileForm: FormGroup;
-
   formData: any = { utilisateur: { type: 'particulier' }, prestation: {}, datedernierrevision: '' };
 
   constructor(
@@ -46,14 +31,11 @@ export class Step4Component implements OnInit {
       typeClient: ['', Validators.required],
       nom: ['', Validators.required],
       prenom: ['', Validators.required],
-      telephone: ['', Validators.required],
+      telephone: ['', Validators.required], // Updated pattern
       adresse: ['', Validators.required],
-      codePostal: ['', Validators.required],
+      codePostal: ['', Validators.required], // Updated pattern
       email: ['', [Validators.required, Validators.email]],
-      motDePasse: [''],
-      confirmerMotDePasse: [''],
-      codeSecurite: ['', Validators.required],
-      datenais: ['', Validators.required]
+      datenais: ['']
     });
   }
 
@@ -73,9 +55,6 @@ export class Step4Component implements OnInit {
         desc: this.prestation.desc || '' // Initialize desc
       };
     }
-    if (this.utilisateur) {
-      this.formData.utilisateur = { ...this.utilisateur, type: this.utilisateur.type || 'particulier' };
-    }
   }
 
   fetchUserData(): void {
@@ -92,21 +71,22 @@ export class Step4Component implements OnInit {
       })
     }).subscribe(
       response => {
-        this.userData = response;
-        const dateNaissanceTrimmed = response.datenais.slice(0, 10);
-        this.profileForm.patchValue({
-          typeClient: response.__t === 'Clientpriv' ? 'Particulier' : 'Entreprise',
-          nom: response.nom,
-          prenom: response.prenom,
-          telephone: response.telephone,
-          adresse: response.adresse,
-          codePostal: response.codep,
-          email: response.email,
-          motDePasse: '',
-          confirmerMotDePasse: '',
-          codeSecurite: response.codep,
-          datenais: dateNaissanceTrimmed
-        });
+        if (response) {
+          const dateNaissanceTrimmed = response.datenais.slice(0, 10);
+          this.profileForm.patchValue({
+            typeClient: response.__t === 'Clientpriv' ? 'Particulier' : 'Entreprise',
+            nom: response.nom,
+            prenom: response.prenom,
+            telephone: response.telephone,
+            adresse: response.adresse,
+            codePostal: response.codep,
+            email: response.email,
+            datenais: dateNaissanceTrimmed
+          });
+          console.log('User data loaded into form:', this.profileForm.value);
+        } else {
+          console.error('No user data found for the provided email');
+        }
       },
       error => {
         console.error('Error fetching user data:', error);
@@ -118,10 +98,10 @@ export class Step4Component implements OnInit {
     this.prevStep.emit();
   }
 
-  onSubmit(): void {
+  submitDevis(): void {
     if (this.profileForm.valid) {
       this.formData.utilisateur = {
-        type: this.profileForm.get('typeClient')?.value,
+        type: this.profileForm.get('typeClient')?.value.toLowerCase(), // Convert to lowercase
         nom: this.profileForm.get('nom')?.value,
         prenom: this.profileForm.get('prenom')?.value,
         telephone: this.profileForm.get('telephone')?.value,
@@ -129,35 +109,30 @@ export class Step4Component implements OnInit {
         adresse: this.profileForm.get('adresse')?.value,
         codePostal: this.profileForm.get('codePostal')?.value
       };
-
-      this.submitForm.emit(this.formData);
-      console.log('Form data:', this.formData);
+  
+      console.log('Form data before submission:', this.formData);
+      this.http.post(`${backendDevisURL}/adddevis`, this.formData).subscribe(
+        response => {
+          console.log('Devis submitted successfully', response);
+          this.toastr.success('Devis soumis avec succès.');
+          this.router.navigate(['/home']);
+        },
+        error => {
+          // Enhance error logging
+          console.error('Error submitting devis', error);
+          const errorMessage = error.error?.message || 'Erreur lors de la soumission du devis';
+          this.toastr.error(errorMessage);
+        }
+      );
     } else {
-      console.log('Form is invalid:', this.formData);
+      this.profileForm.markAllAsTouched();
+      this.toastr.warning('Veuillez remplir tous les champs obligatoires.');
+      console.log('Form is invalid:', this.profileForm.value);
     }
   }
-
-  isFormValid(): boolean {
-    if (this.formData.utilisateur.type === 'particulier') {
-      return (
-        this.formData.utilisateur.nom &&
-        this.formData.utilisateur.prenom &&
-        this.formData.utilisateur.telephone &&
-        this.formData.utilisateur.email &&
-        this.formData.utilisateur.adresse &&
-        this.formData.utilisateur.codePostal
-      );
-    } else {
-      return (
-        this.formData.utilisateur.nomEntreprise &&
-        this.formData.utilisateur.siret &&
-        this.formData.utilisateur.nom &&
-        this.formData.utilisateur.prenom &&
-        this.formData.utilisateur.telephone &&
-        this.formData.utilisateur.email &&
-        this.formData.utilisateur.adresse &&
-        this.formData.utilisateur.codePostal
-      );
-    }
+  
+  
+  onSubmit(): void {
+    this.submitDevis();
   }
 }

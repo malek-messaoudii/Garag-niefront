@@ -1,0 +1,265 @@
+<app-gmenu></app-gmenu>
+<div class="m1">
+  Mon agenda
+</div>
+<br><br>
+<div class="row">
+  <div class="d1">
+    Terminé
+  </div>
+  <div class="d2">
+    En cours
+  </div>
+  <div class="d3">
+    Retour VO
+  </div>
+</div>
+<div class="agenda-header">
+  <button (click)="printAgenda()" class="print-button">Imprimer l'agenda</button>
+</div>
+
+<!-- Modal -->
+<div *ngIf="showModal" class="modal-overlay">
+  <div class="modal-content">
+    <h3>Ajouter un rendez-vous le {{selectedDateInfo?.startStr}}</h3>
+    <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="status">Etat:</label>
+        <select id="status" formControlName="status">
+          <option value="En cours">En cours</option>
+          <option value="Terminé">Terminé</option>
+          <option value="Annulé">Annulé</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="datesouhaite">Date RDV:</label>
+        <input id="datesouhaite" formControlName="datesouhaite" type="date" />
+      </div>
+      <div class="form-group">
+        <label for="heuresouhaite">Heure RDV:</label>
+        <input id="heuresouhaite" formControlName="heuresouhaite" type="number" />
+      </div>
+      <div class="form-group">
+        <label for="titre">Titre:</label>
+        <input id="titre" formControlName="titre" />
+      </div>
+      <div class="form-group">
+        <label for="desc">Description:</label>
+        <textarea id="desc" formControlName="desc"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="nom">Nom du client:</label>
+        <input id="nom" formControlName="nom" />
+      </div>
+      <div class="form-group">
+        <label for="prenom">Prenom du client:</label>
+        <input id="prenom" formControlName="prenom" />
+      </div>
+      <div class="form-group" formGroupName="vehicule">
+        <label for="make">Marque :</label>
+        <select id="make" formControlName="make" (change)="onMakeChange($event)">
+          <option *ngFor="let make of makes" [value]="make">{{ make }}</option>
+        </select>
+      </div>
+      <div class="form-group" formGroupName="vehicule">
+        <label for="model">Modèle :</label>
+        <select id="model" formControlName="model">
+          <option *ngFor="let model of models" [value]="model">{{ model }}</option>
+        </select>
+      </div>
+      
+      <div class="form-group" formGroupName="vehicule">
+        <label for="imm">Immatriculation :</label>
+        <input id="imm" formControlName="immatriculation" />
+      </div>
+      <h3>Date de restitution</h3>
+      <div class="form-group">
+        <label for="dateRestitution">Date de restitution:</label>
+        <input id="dateRestitution" formControlName="dateRestitution" type="date" />
+      </div>
+      <div class="form-group">
+        <label for="heureRestitution">Heure de restitution:</label>
+        <input id="heureRestitution" formControlName="heureRestitution" type="number" />
+      </div>
+      <h3>Planning</h3>
+      <div class="form-group">
+        <label for="mecanicien">Mécanicien :</label>
+        <select id="mecanicien" formControlName="mecanicien">
+          <option value="">Sélectionnez un mécanicien</option>
+          <option *ngFor="let mec of mecanicien" >{{ mec.nom }} {{ mec.prenom }}</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="titreprs">Prestation :</label>
+        <select id="titrepres" formControlName="titrepres">
+          <option value="FORFAIT RÉVISION">FORFAIT RÉVISION</option>
+          <option value="FORFAIT FREINAGE">FORFAIT FREINAGE</option>
+          <option value="FORFAIT AMORTISSEUR">FORFAIT AMORTISSEUR</option>
+          <option value="FORFAIT EMBRAYAGE">FORFAIT EMBRAYAGE</option>
+          <option value="DÉMARRAGE">DÉMARRAGE</option>
+          <option value="FORFAIT KIT DE DISTRIBUTION">FORFAIT KIT DE DISTRIBUTION</option>
+          <option value="DIRECTION">DIRECTION</option>
+          <option value="FORFAIT ÉCHAPPEMENT">FORFAIT ÉCHAPPEMENT</option>
+          <option value="FORFAIT CLIMATISATION">FORFAIT CLIMATISATION</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="titreTache">Titre tâche:</label>
+        <input id="titreTache" formControlName="titreTache" />
+      </div>
+      <div class="form-group">
+        <label for="dateTache">Date tâche:</label>
+        <input id="dateTache" formControlName="dateTache" type="date" />
+      </div>
+      <div class="form-group">
+        <label for="debutTache">Début tâche:</label>
+        <input id="debutTache" formControlName="debutTache" type="number" />
+      </div>
+      <div class="form-group">
+        <label for="finTache">Fin tâche:</label>
+        <input id="finTache" formControlName="finTache" type="number" />
+      </div>
+      <button type="submit" (click)="onSubmit()">Ajouter</button>
+      <button type="button" (click)="closeModal()">Annuler</button>
+    </form>
+  </div>
+</div>
+
+<full-calendar #calendar [options]="calendarOptions"></full-calendar>
+<app-footer></app-footer>
+
+<!-- Modal for displaying rdv details -->
+<div class="modal" tabindex="-1" role="dialog" [ngClass]="{'show': showRdvDetails}" [ngStyle]="{'display': showRdvDetails ? 'block' : 'none'}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Détails du rendez-vous</h5>
+      </div>
+      <div class="modal-body">
+        <p><strong>Titre:</strong> {{ selectedRdv?.title || 'Non renseigné' }}</p>
+        <p><strong>Numéro de devis:</strong> {{ selectedRdv?.extendedProps.numdevis || 'Non renseigné' }}</p>
+        <p><strong>Immatriculation:</strong> {{ selectedRdv?.extendedProps.immatriculation || 'Non renseigné' }}</p>
+        <p><strong>Modèle:</strong> {{ selectedRdv?.extendedProps.model || 'Non renseigné' }}</p>
+        <p><strong>Date du rdv:</strong> {{ selectedRdv?.start ? (selectedRdv.start | date) : 'Non renseigné' }}</p>
+        <p><strong>Heure du rdv:</strong> {{ selectedRdv?.extendedProps.heuresouhaite || 'Non renseigné' }}</p>
+        <p><strong>Description mission:</strong> {{ selectedRdv?.extendedProps.titre || 'Non renseigné' }}</p>
+        <p><strong>Statut:</strong> {{ selectedRdv?.extendedProps.status || 'Non renseigné' }}</p>
+        <p><strong>Prestation:</strong> {{ selectedRdv?.extendedProps.prestation || 'Non renseigné' }}</p>
+        <p><strong>Mécanicien:</strong> {{ selectedRdv?.extendedProps.mecanicien || 'Non renseigné' }}</p>
+      </div>
+      
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="closeRdvDetails()">Fermer</button>
+        <button type="button" class="btn btn-primary" (click)="openUpdateForm(rdv)" >Modifier</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for Updating an Appointment -->
+<div *ngIf="showUpdateModal" class="modal-overlay">
+  <div class="modal-content">
+    <h3>Modifier le rendez-vous</h3>
+    <form [formGroup]="updateForm" (ngSubmit)="updateAppointment()">
+      <div class="form-group">
+        <label for="status">État:</label>
+        <select id="status" formControlName="status">
+          <option value="En cours">En cours</option>
+          <option value="Terminé">Terminé</option>
+          <option value="Annulé">Annulé</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="update-datesouhaite">Date RDV:</label>
+        <input id="update-datesouhaite" formControlName="datesouhaite" type="date" />
+      </div>
+      <div class="form-group">
+        <label for="heuresouhaite">Heure RDV:</label>
+        <input id="heuresouhaite" formControlName="heuresouhaite" type="number" />
+      </div>
+      <div class="form-group">
+        <label for="titre">Titre:</label>
+        <input id="titre" formControlName="titre" />
+      </div>
+      <div class="form-group">
+        <label for="update-desc">Description:</label>
+        <textarea id="update-desc" formControlName="desc"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="update-nom">Nom du client:</label>
+        <input id="update-nom" formControlName="nom" />
+      </div>
+      <div class="form-group">
+        <label for="update-prenom">Prénom du client:</label>
+        <input id="update-prenom" formControlName="prenom" />
+      </div>
+      <div class="form-group" formGroupName="vehicule">
+        <label for="update-make">Marque:</label>
+        <select id="update-make" formControlName="make">
+          <option *ngFor="let make of makes" [value]="make">{{ make }}</option>
+        </select>
+      </div>
+      <div class="form-group" formGroupName="vehicule">
+        <label for="update-model">Modèle:</label>
+        <select id="update-model" formControlName="model">
+          <option *ngFor="let model of models" [value]="model">{{ model }}</option>
+        </select>
+      </div>
+      <div class="form-group" formGroupName="vehicule">
+        <label for="update-imm">Immatriculation:</label>
+        <input id="update-imm" formControlName="immatriculation" />
+      </div>
+      <h3>Date de restitution</h3>
+      <div class="form-group">
+        <label for="update-dateRestitution">Date de restitution:</label>
+        <input id="update-dateRestitution" formControlName="dateRestitution" type="date" />
+      </div>
+      <div class="form-group">
+        <label for="update-heureRestitution">Heure de restitution:</label>
+        <input id="update-heureRestitution" formControlName="heureRestitution" type="number" />
+      </div>
+      <h3>Planning</h3>
+      <div class="form-group">
+        <label for="update-mecanicien">Mécanicien:</label>
+        <select id="update-mecanicien" formControlName="mecanicien">
+          <option value="">Sélectionnez un mécanicien</option>
+          <option *ngFor="let mec of mecanicien">{{ mec.nom }} {{ mec.prenom }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="update-titreprs">Prestation:</label>
+        <select id="update-titrepres" formControlName="titrepres">
+          <option value="FORFAIT RÉVISION">FORFAIT RÉVISION</option>
+          <option value="FORFAIT FREINAGE">FORFAIT FREINAGE</option>
+          <option value="FORFAIT AMORTISSEUR">FORFAIT AMORTISSEUR</option>
+          <option value="FORFAIT EMBRAYAGE">FORFAIT EMBRAYAGE</option>
+          <option value="DÉMARRAGE">DÉMARRAGE</option>
+          <option value="FORFAIT KIT DE DISTRIBUTION">FORFAIT KIT DE DISTRIBUTION</option>
+          <option value="DIRECTION">DIRECTION</option>
+          <option value="FORFAIT ÉCHAPPEMENT">FORFAIT ÉCHAPPEMENT</option>
+          <option value="FORFAIT CLIMATISATION">FORFAIT CLIMATISATION</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="update-titreTache">Titre tâche:</label>
+        <input id="update-titreTache" formControlName="titreTache" />
+      </div>
+      <div class="form-group">
+        <label for="update-dateTache">Date tâche:</label>
+        <input id="update-dateTache" formControlName="dateTache" type="date" />
+      </div>
+      <div class="form-group">
+        <label for="update-debutTache">Début tâche:</label>
+        <input id="update-debutTache" formControlName="debutTache" type="number" />
+      </div>
+      <div class="form-group">
+        <label for="update-finTache">Fin tâche:</label>
+        <input id="update-finTache" formControlName="finTache" type="number" />
+      </div>
+      <button type="submit">Mettre à jour</button>
+      <button type="button" (click)="closeUpdateModal()">Annuler</button>
+    </form>
+  </div>
+</div>

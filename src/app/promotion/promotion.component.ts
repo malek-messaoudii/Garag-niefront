@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-promotion',
@@ -9,20 +10,27 @@ import { DatePipe } from '@angular/common';
   providers: [DatePipe]
 })
 export class PromotionComponent implements OnInit {
-  newPromotion = { price: 0, description: '', mois: '' };
-  private apiUrl = 'http://localhost:4000/promotions';
-  promotionsByMonth: { [key: string]: Array<{ price: number, description: string, mois: string, _id?: string }> } = {};
-
+  promotionsByMonth: { [key: string]: { price: number, prestation: { titre: string }, mois: string, _id?: string }[] } = {};
   months: string[] = [
     'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
     'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
   ];
 
-  constructor(private datePipe: DatePipe, private http: HttpClient) {}
+
+  private apiUrl = 'http://localhost:4000/promotions';
+
+  constructor(
+    private datePipe: DatePipe,
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.fetchPromotions();
+    
   }
+
+  
 
   fetchPromotions(): void {
     this.http.get<any[]>(this.apiUrl).subscribe(
@@ -46,32 +54,7 @@ export class PromotionComponent implements OnInit {
     }, {});
   }
 
-  addPromotion(): void {
-    this.http.post<any>(`${this.apiUrl}/register`, this.newPromotion).subscribe(
-      response => {
-        this.promotionsByMonth = this.groupPromotionsByMonth([...this.getAllPromotions(), response]);
-        this.newPromotion = { price: 0, description: '', mois: '' }; // Reset the form
-        console.log('Promotion added successfully');
-      },
-      error => {
-        console.error('Error adding promotion:', error);
-      }
-    );
-  }
-
-  deletePromotion(id: string): void {
-    this.http.delete(`${this.apiUrl}/${id}`).subscribe(
-      () => {
-        this.promotionsByMonth = this.groupPromotionsByMonth(this.getAllPromotions().filter(promotion => promotion._id !== id));
-        console.log('Promotion deleted successfully');
-      },
-      error => {
-        console.error('Error deleting promotion:', error);
-      }
-    );
-  }
-
-  private getAllPromotions(): any[] {
-    return Object.values(this.promotionsByMonth).flat();
+  onPrestationClick(promotion: any): void {
+    this.router.navigate(['/profite'], { queryParams: { promotion: JSON.stringify(promotion) } });
   }
 }

@@ -1,55 +1,62 @@
-<div class="background"><br>
-    <h1 class="mt">Recevez votre devis</h1>
-  </div>
-  
-  <div class="m1">
-    <div class="m2">
-      <h2>Étape 4: Informations personnelles</h2>
-      <form (ngSubmit)="onSubmit()" [formGroup]="profileForm">
-        <div class="form-group">
-          <label for="type">Vous êtes :</label>
-          <input type="text" id="typeClient" formControlName="typeClient" />
-        </div>
-  
-        <!-- Formulaire pour particulier -->
-        <div>
-          <div class="form-group">
-            <label for="nom">Nom : *</label>
-            <input id="firstName" type="text" name="nom" formControlName="nom">
-          </div>
-          <div class="form-group">
-            <label for="prenom">Prénom : *</label>
-            <input id="lastName" type="text" name="prenom" formControlName="prenom">
-          </div>
-          <div class="form-group">
-            <label for="telephone">Téléphone : *</label>
-            <input id="phone" type="tel" name="telephone" formControlName="telephone">
-          </div>
-          <div class="form-group">
-            <label for="email">Email: *</label>
-            <input id="email" type="email" name="email" formControlName="email">
-          </div>
-          <div class="form-group">
-            <label for="adresse">Adresse : *</label>
-            <input id="address" type="text" name="adresse" formControlName="adresse">
-          </div>
-          <div class="form-group">
-            <label for="codePostal">Code Postal : *</label>
-            <input id="postalCode" type="text" name="codePostal" formControlName="codePostal">
-          </div>
-        </div>
-        <div class="btn">
-          <button type="button" (click)="onPrevious()" class="bn632-hover bn26">Précédent</button>
-          <button type="submit" class="bn632-hover bn26">Suivant</button>
-        </div>
-      </form>
-    </div>
-    <div class="p1">
-      <h5 class="p2">Après la soumission de votre demande de devis, nos experts l'examineront rapidement. <br> Vous serez contacté dès que votre devis sera validé.<br> Merci de votre confiance, Garagénie s'engage à vous offrir une expérience rapide et efficace.</h5>
-      <br> <br>
-      <div>
-        <img alt="" src="../../assets/logo2.png" width="420" height="150" class="logo1" />
+<div class="background">
+  <br>
+  <h1 class="mt">Recevez votre devis</h1>
+</div>
+
+<div class="m1">
+  <div class="m2">
+    <h2>Étape 4: Informations personnelles</h2>
+    <form (ngSubmit)="onSubmit()" [formGroup]="profileForm">
+      <div class="form-group">
+        <label for="typeClient">Vous êtes :</label>
+        <input type="text" id="typeClient" formControlName="typeClient" class="form-control" />
+        <div *ngIf="profileForm.get('typeClient')?.invalid && profileForm.get('typeClient')?.touched" class="error-message">Type de client requis</div>
       </div>
+
+      <!-- Formulaire pour particulier -->
+      <div>
+        <div class="form-group">
+          <label for="nom">Nom : *</label>
+          <input id="nom" type="text" formControlName="nom" class="form-control">
+          <div *ngIf="profileForm.get('nom')?.invalid && profileForm.get('nom')?.touched" class="error-message">Nom requis</div>
+        </div>
+        <div class="form-group">
+          <label for="prenom">Prénom : *</label>
+          <input id="prenom" type="text" formControlName="prenom" class="form-control">
+          <div *ngIf="profileForm.get('prenom')?.invalid && profileForm.get('prenom')?.touched" class="error-message">Prénom requis</div>
+        </div>
+        <div class="form-group">
+          <label for="telephone">Téléphone : *</label>
+          <input id="telephone" type="tel" formControlName="telephone" class="form-control">
+          <div *ngIf="profileForm.get('telephone')?.invalid && profileForm.get('telephone')?.touched" class="error-message">Téléphone requis</div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email: *</label>
+          <input id="email" type="email" formControlName="email" class="form-control">
+          <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched" class="error-message">Email requis</div>
+        </div>
+        <div class="form-group">
+          <label for="adresse">Adresse : *</label>
+          <input id="adresse" type="text" formControlName="adresse" class="form-control">
+          <div *ngIf="profileForm.get('adresse')?.invalid && profileForm.get('adresse')?.touched" class="error-message">Adresse requise</div>
+        </div>
+        <div class="form-group">
+          <label for="codePostal">Code Postal : *</label>
+          <input id="codePostal" type="text" formControlName="codePostal" class="form-control">
+          <div *ngIf="profileForm.get('codePostal')?.invalid && profileForm.get('codePostal')?.touched" class="error-message">Code postal requis</div>
+        </div>
+      </div>
+      <div class="btn">
+        <button type="button" (click)="onPrevious()" class="bn632-hover bn26">Précédent</button>
+        <button type="submit" class="bn632-hover bn26">Suivant</button>
+      </div>
+    </form>
+  </div>
+  <div class="p1">
+    <h5 class="p2">Après la soumission de votre demande de devis, nos experts l'examineront rapidement. <br> Vous serez contacté dès que votre devis sera validé.<br> Merci de votre confiance, Garagénie s'engage à vous offrir une expérience rapide et efficace.</h5>
+    <br> <br>
+    <div>
+      <img alt="" src="../../assets/logo2.png" width="420" height="150" class="logo1" />
     </div>
   </div>
-  
+</div>

@@ -25,8 +25,10 @@ export class QuoteStep3Component implements OnInit {
   constructor(private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    if (this.prestation && this.prestation.specificOptions) {
+    if (this.prestation && this.prestation.options) {
       this.options = [...this.prestation.options];
+    } else {
+      this.prestation.options = [];
     }
   }
 

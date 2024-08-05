@@ -1,0 +1,69 @@
+<app-gmenu></app-gmenu>
+
+<div class="m1">
+  L'historique de vos interventions
+</div>
+<div class="m3">
+  <h6> Vous trouvez ci-dessous la liste des interventions: </h6>
+  <button (click)="toggleAddForm()" class="btn8"> Ajouter une nouvelle intervention <mat-icon>miscellaneous_services</mat-icon></button> 
+</div>
+
+<div *ngIf="showAddForm" class="overlay">
+  <div class="popup-form">
+    <h3 class="hh">Ajouter une intervention</h3>
+    <form [formGroup]="addIntervForm" (ngSubmit)="addIntervention()">
+      <div class="form-group">
+        <label for="email">Client : *</label>
+        <select id="email" formControlName="email" class="form-control">
+          <option *ngFor="let email of emails" [value]="email">{{ email }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="titre">Titre : *</label>
+        <input id="titre" formControlName="titre" class="form-control" placeholder="Entrez le titre">
+      </div>
+      <div class="form-group">
+        <label for="pdf">Pièce jointe (PDF) : *</label>
+        <input type="file" id="pdf" (change)="onFileChange($event)" class="form-control" accept="application/pdf">
+      </div>
+      <div class="form-group">
+        <label for="kilo">Kilométrage : *</label>
+        <input id="kilo" formControlName="kilo" class="form-control" placeholder="Entrez le kilométrage">
+      </div>
+      <div class="d1">
+        <button type="submit" class="btn btn-success">Ajouter</button>
+        <button type="button" class="btn btn-secondary" (click)="toggleAddForm()">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="container mt-5">
+  <div *ngIf="interventions.length === 0" class="p1">
+    <h1>Pas encore d'interventions</h1> <mat-icon class="ico">report_icon</mat-icon>
+  </div>
+  
+
+  <table *ngIf="interventions.length > 0" class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Client</th>
+        <th>Titre</th>
+        <th>Date</th>
+        <th>Kilométrage</th>
+        <th>PDF</th>
+        <th>Détails</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let interv of interventions">
+        <td>{{ interv.utilisateur?.email }}</td>
+        <td>{{ interv.datec | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ interv.titre }}</td>
+        <td>{{ interv.kilo }}</td>
+        <td><a [href]="interv.pdf" target="_blank">Voir PDF</a></td>
+        <td><mat-icon>search_icon</mat-icon></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<app-footer></app-footer>

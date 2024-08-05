@@ -1,0 +1,121 @@
+<div class="background">
+    <div class="appointment-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <h2 class="tit">Avec Garagénie bénéficier d'une voiture de prêt gratuitement</h2>
+            <button class="btn btn-primary" (click)="toggleForm()">Réserver</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="showForm">
+      <div class="overlay">
+        <div class="popup-form">
+          <div class="modal-content">
+            <h2 class="tot">Réservation de voiture</h2>
+            <div class="form-container">
+              <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
+                <fieldset>
+                  <div class="form-group">
+                    <label for="dateDebut">Date de début :</label>
+                    <input type="date" id="dateDebut" formControlName="dateDebut" required>
+                    <div *ngIf="reservationForm.get('dateDebut')!.invalid && reservationForm.get('dateDebut')!.touched">
+                      <small class="text-danger">Ce champ est requis et doit être une date future</small>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="dateFin">Date de fin :</label>
+                    <input type="date" id="dateFin" formControlName="dateFin" required>
+                    <div *ngIf="reservationForm.get('dateFin')!.invalid && reservationForm.get('dateFin')!.touched">
+                      <small class="text-danger">Ce champ est requis et doit être une date future</small>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="prestation">Prestation :</label>
+                    <select id="prestation" formControlName="prestation" class="form-control" required>
+                      <option value="" disabled selected>Sélectionnez une prestation</option>
+                      <option value="FORFAIT RÉVISION">FORFAIT RÉVISION</option>
+                      <option value="FORFAIT FREINAGE">FORFAIT FREINAGE</option>
+                      <option value="FORFAIT AMORTISSEUR">FORFAIT AMORTISSEUR</option>
+                      <option value="FORFAIT EMBRAYAGE">FORFAIT EMBRAYAGE</option>
+                      <option value="DÉMARRAGE">DÉMARRAGE</option>
+                      <option value="FORFAIT KIT DE DISTRIBUTION">FORFAIT KIT DE DISTRIBUTION</option>
+                      <option value="DIRECTION">DIRECTION</option>
+                      <option value="FORFAIT ÉCHAPPEMENT">FORFAIT ÉCHAPPEMENT</option>
+                      <option value="FORFAIT CLIMATISATION">FORFAIT CLIMATISATION</option>
+                    </select>
+                    <div *ngIf="reservationForm.get('prestation')!.invalid && reservationForm.get('prestation')!.touched">
+                      <small class="text-danger">Ce champ est requis</small>
+                    </div>
+                  </div>
+                  <div formGroupName="utilisateur">
+                    <div class="form-group">
+                      <label for="nom">Nom :</label>
+                      <input type="text" id="nom" formControlName="nom" required readonly>
+                      <div *ngIf="reservationForm.get('utilisateur')!.get('nom')!.invalid && reservationForm.get('utilisateur')!.get('nom')!.touched" readonly>
+                        <small class="text-danger">Ce champ est requis</small>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="prenom">Prénom :</label>
+                      <input type="text" id="prenom" formControlName="prenom" required readonly>
+                      <div *ngIf="reservationForm.get('utilisateur')!.get('prenom')!.invalid && reservationForm.get('utilisateur')!.get('prenom')!.touched" readonly>
+                        <small class="text-danger">Ce champ est requis</small>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="email">Email :</label>
+                      <input type="email" id="email" formControlName="email" required readonly>
+                      <div *ngIf="reservationForm.get('utilisateur')!.get('email')!.invalid && reservationForm.get('utilisateur')!.get('email')!.touched" readonly>
+                        <small class="text-danger">Ce champ est requis et doit être un email valide</small>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="telephone">Téléphone :</label>
+                      <input type="tel" id="telephone" formControlName="telephone" required readonly>
+                      <div *ngIf="reservationForm.get('utilisateur')!.get('telephone')!.invalid && reservationForm.get('utilisateur')!.get('telephone')!.touched" >
+                        <small class="text-danger">Ce champ est requis</small>
+                      </div>
+                    </div>
+                  </div>
+                  <h2 class="tot">Informations sur le véhicule</h2>
+                  <div formGroupName="vehicule">
+                    <div class="form-group">
+                      <label for="immatriculation">Immatriculation :</label>
+                      <input type="text" id="immatriculation" formControlName="immatriculation" required>
+                      <div *ngIf="reservationForm.get('vehicule')!.get('immatriculation')!.invalid && reservationForm.get('vehicule')!.get('immatriculation')!.touched">
+                        <small class="text-danger">Ce champ est requis</small>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="kilometrage">Kilométrage :</label>
+                      <input type="number" id="kilometrage" formControlName="kilometrage" required>
+                      <div *ngIf="reservationForm.get('vehicule')!.get('kilometrage')!.invalid && reservationForm.get('vehicule')!.get('kilometrage')!.touched">
+                        <small class="text-danger">Ce champ est requis</small>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="dateDerniereRevision">Date de la dernière révision :</label>
+                      <input type="date" id="dateDerniereRevision" formControlName="dateDerniereRevision" required>
+                      <div *ngIf="reservationForm.get('vehicle')!.get('dateDerniereRevision')!.invalid && reservationForm.get('vehicle')!.get('dateDerniereRevision')!.touched">
+                        <small class="text-danger">Ce champ est requis et doit être une date passée</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="message">Message (facultatif) :</label>
+                    <textarea id="message" formControlName="message"></textarea>
+                  </div>
+                </fieldset>
+                <button type="submit" class="btn btn-success">Soumettre</button>
+                <button type="button" class="btn btn-secondary" (click)="showForm = false">Annuler</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

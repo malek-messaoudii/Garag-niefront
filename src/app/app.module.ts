@@ -51,9 +51,24 @@ import { PromotionComponent } from './promotion/promotion.component';
 import { RdvvenirComponent } from './rdvvenir/rdvvenir.component';
 import { Devis2Component } from './devis2/devis2.component';
 import { Step4Component } from './step4/step4.component';
-
-
-
+import { ProfiteComponent } from './profite/profite.component';
+import { GmenuComponent } from './gmenu/gmenu.component';
+import { GhomeComponent } from './ghome/ghome.component';
+import { GcontactComponent } from './gcontact/gcontact.component';
+import { GstatComponent } from './gstat/gstat.component';
+import { GinfoComponent } from './ginfo/ginfo.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { GmecanComponent } from './gmecan/gmecan.component';
+import { ProgrammeComponent } from './programme/programme.component';
+import { GarageComponent } from './garage/garage.component';
+import { GagendaComponent } from './gagenda/gagenda.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { GrdvComponent } from './grdv/grdv.component';
+import { GdemandeComponent } from './gdemande/gdemande.component';
+import { GintervComponent } from './ginterv/ginterv.component';
+import { PretComponent } from './pret/pret.component';
+import { VoiturepretComponent } from './voiturepret/voiturepret.component'; 
 
 @NgModule({
   declarations: [
@@ -101,10 +116,26 @@ import { Step4Component } from './step4/step4.component';
     RdvvenirComponent,
     Devis2Component,
     Step4Component,
+    ProfiteComponent,
+    GmenuComponent,
+    GhomeComponent,
+    GcontactComponent,
+    GstatComponent,
+    GinfoComponent,
+    GmecanComponent,
+    ProgrammeComponent,
+    GarageComponent,
+    GagendaComponent,
+    GrdvComponent,
+    GdemandeComponent,
+    GintervComponent,
+    PretComponent,
+    VoiturepretComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FullCalendarModule,
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
@@ -117,7 +148,10 @@ import { Step4Component } from './step4/step4.component';
       preventDuplicates: true,
       progressBar: false,
     }),
-
+    MatToolbarModule,
+    MatCardModule,
+    MatIconModule,
+     
   ],
   providers: [],
   bootstrap: [AppComponent]

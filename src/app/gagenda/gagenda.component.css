@@ -1,0 +1,225 @@
+.m1 {
+  font-size: 30px;
+  text-align: start;
+  align-items: center;
+  align-content: center;
+  padding: 40px;
+  color: #ffffff;
+  font-family: "Archivo Black", sans-serif;
+  height: 30vh;
+  background-color: #007bff;
+}
+
+.agenda-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+  margin-right: 40px;
+}
+
+.print-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.print-button:hover {
+  background-color: #0056b3;
+}
+
+full-calendar {
+  height: 100vh;
+  margin: 40px;
+}
+
+.fc-daygrid-day-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+}
+
+.add-event-button {
+  background-color: transparent;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.add-event-button i {
+  font-size: 16px;
+}
+
+.add-event-button:hover {
+  color: #0056b3;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.d1{
+  background-color: green;
+  width: fit-content;
+  padding: 5px;
+  color: white;
+  border-radius: 5px;
+  margin-inline: 10px;
+
+}
+
+.d2{
+  background-color: #0f5bd4;
+  width: fit-content;
+  padding: 5px;
+  color: white;
+  border-radius: 5px;
+  margin-inline: 10px;
+}
+
+.d3{
+  background-color: red;
+  width: fit-content;
+  padding: 5px;
+  color: white;
+  border-radius: 5px;
+  margin-inline: 10px;
+}
+
+.row{
+  margin-left: 40px;
+}
+
+.modal-content {
+  position: fixed;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 600px; /* Ajusted width */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+  max-height: 95vh; /* Maximum height to allow scrolling */
+  overflow-y: auto; /* Enable scrolling */
+}
+
+.event-en-cours {
+  background-color: blue !important;
+  border-color: blue !important;
+}
+
+.event-termine {
+  background-color: green !important;
+  border-color: green !important;
+}
+
+.event-annule {
+  background-color: red !important;
+  border-color: red !important;
+}
+
+
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  color: #007bff;
+}
+
+.modal-content form {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 15px; /* Space between fields */
+}
+
+.modal-content form .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-content form label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-content form input,
+.modal-content form select,
+.modal-content form textarea {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s;
+}
+
+.modal-content form input:focus,
+.modal-content form select:focus,
+.modal-content form textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.modal-content form button {
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  grid-column: span 1; /* Single button in a column */
+}
+
+.modal-content form button[type="button"] {
+  background-color: #ccc;
+  margin-left: 10px;
+  grid-column: span 1; /* Single button in a column */
+}
+
+.modal-content form button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.modal-content form button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.modal-title{
+  font-size: large;
+  font-family: "Archivo Black", sans-serif;
+  color: #007bff;
+}
+
+
+.modal-overlay{
+  z-index: 2000;
+}
+.modal-content{
+  z-index: 2000;
+}

@@ -57,74 +57,66 @@
 <div class="actions">
   <button class="bn632-hover bn26" (click)="requestQuote()">DEMANDER UN DEVIS</button>
   <button class="bn632-hover bn26" (click)="scheduleAppointment()">PRENDRE UN RDV</button>
-</div>
-<div *ngIf="showAddForm1" class="overlay">
-  <div class="popup-form">
-    <h3 class="hh">Prendre un rendez-vous</h3>
-    <form [formGroup]="addrdvForm" (ngSubmit)="addrdv()">
-      <div class="form-group">
-        <label for="vehicule">Choisissez votre véhicule : *</label>
-        <select id="vehicule" formControlName="vehicule" class="form-control">
-          <option value="" disabled selected>Sélectionnez un véhicule</option>
-          <option *ngFor="let vehicule of vehicules" [value]="vehicule._id">{{ vehicule.immatriculation }} - {{ vehicule.make }}</option>
-        </select>
-      </div>
-      
-      <div class="form-group">
-        <label for="numdevis">Numéro de devis : *</label>
-        <input id="numdevis" formControlName="numdevis" class="form-control" placeholder="Entrez le numéro de devis">
-      </div>
-            
-      <div class="form-group">
-        <label for="datesouhaite">Date de rendez-vous souhaité : *</label>
-        <input id="datesouhaite" formControlName="datesouhaite" class="form-control" type="date" placeholder="Sélectionnez la date du rdv souhaité">
-      </div>
-      
-      <div class="form-group">
-        <label for="heuresouhaite">Heure de rendez-vous souhaité : *</label>
-        <input id="heuresouhaite" formControlName="heuresouhaite" class="form-control" type="number" placeholder="Entrez l'heure du rdv souhaité">
-      </div>
-
-      <div class="form-group">
-        <label for="prestation">Prestation : *</label>
-        <select id="prestation" formControlName="titrepres"  class="form-control" required>
-          <option value="" disabled selected>Sélectionnez une prestation</option>
-          <option value="FORFAIT RÉVISION">FORFAIT RÉVISION</option>
-          <option value="FORFAIT FREINAGE">FORFAIT FREINAGE</option>
-          <option value="FORFAIT AMORTISSEUR">FORFAIT AMORTISSEUR</option>
-          <option value="FORFAIT EMBRAYAGE">FORFAIT EMBRAYAGE</option>
-          <option value="DÉMARRAGE">DÉMARRAGE</option>
-          <option value="FORFAIT KIT DE DISTRIBUTION">FORFAIT KIT DE DISTRIBUTION</option>
-          <option value="DIRECTION">DIRECTION</option>
-          <option value="FORFAIT ÉCHAPPEMENT">FORFAIT ÉCHAPPEMENT</option>
-          <option value="FORFAIT CLIMATISATION">FORFAIT CLIMATISATION</option>
-        </select>
-      </div>
-      
-      <div class="form-group">
-        <label for="desc">Description : </label>
-        <textarea id="desc" formControlName="desc" class="form-control"></textarea>
-      </div>
-
-      <div class="form-group">
-        <label for="voiturepret">Voiture de prêt : </label>
-        <input id="voiturepret" formControlName="voiturepret" type="checkbox">
-      </div>
-      
-      <div class="form-group">
-        <label for="email">E-mail : *</label>
-        <input type="email" id="email" formControlName="email" class="form-control" placeholder="Entrez votre e-mail">
-      </div>
-
-      <div class="d1">
-        <button type="submit" class="btn btn-success">Ajouter</button>
-        <button type="button" class="btn btn-secondary" (click)="scheduleAppointment()">Annuler</button>
-      </div>
-    </form>
   </div>
-</div>
-
-
+  <div *ngIf="showAddForm1" class="overlay">
+    <div class="popup-form">
+      <h3 class="hh">Prendre un rendez-vous</h3>
+      <form [formGroup]="addrdvForm" (ngSubmit)="addrdv()">
+        <div class="form-group">
+          <label for="vehicule">Choisissez votre véhicule : *</label>
+          <select id="vehicule" formControlName="vehicule" class="form-control">
+            <option value="" disabled selected>Sélectionnez un véhicule</option>
+            <option *ngFor="let vehicule of vehicules" [value]="vehicule._id">
+              {{ vehicule.immatriculation }} - {{ vehicule.make }} - {{ vehicule.model }}
+            </option>
+          </select>
+        </div>
+  
+        <div class="form-group">
+          <label for="numdevis">Choisissez votre numéro de devis : *</label>
+          <select id="numdevis" formControlName="numdevis" class="form-control">
+            <option *ngFor="let devis of devisList" [value]="devis.numdevis">{{ devis.numdevis }}</option>
+          </select>
+        </div>
+  
+        <div class="form-group">
+          <label for="datesouhaite">Date de rendez-vous souhaité : *</label>
+          <input id="datesouhaite" formControlName="datesouhaite" class="form-control" type="date">
+        </div>
+  
+        <div class="form-group">
+          <label for="heuresouhaite">Heure de rendez-vous souhaité : *</label>
+          <input id="heuresouhaite" formControlName="heuresouhaite" class="form-control" type="number">
+        </div>
+  
+        <div class="form-group">
+          <label for="titrepres">Titre de la prestation :</label>
+          <input id="titrepres" formControlName="titrepres" class="form-control" readonly>
+        </div>
+  
+        <div class="form-group">
+          <label for="desc">Description : </label>
+          <textarea id="desc" formControlName="desc" class="form-control"></textarea>
+        </div>
+  
+        <div class="form-group">
+          <label for="voiturepret">Voiture de prêt : </label>
+          <input id="voiturepret" formControlName="voiturepret" class="form-control" readonly>
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail : </label>
+          <input id="vemail" formControlName="email" class="form-control" readonly>
+        </div>
+  
+        <div class="d1">
+          <button type="submit" class="btn btn-success">Ajouter</button>
+          <button type="button" class="btn btn-secondary" (click)="scheduleAppointment()">Annuler</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  
 
 
 <div *ngIf="showAddForm2" class="overlay">
@@ -135,16 +127,12 @@
         <label for="typedemande">Type de demande : *</label>
         <input id="typedemande" formControlName="typedemande" class="form-control" readonly>
       </div>
-      <div class="form-group">
-        <label for="email">E-mail : *</label>
-        <input type="email" id="email" formControlName="email" class="form-control"  readonly>
-      </div>
-
+      
       <div class="form-group">
         <label for="vehicule">Choisissez votre véhicule : *</label>
         <select id="vehicule" formControlName="vehicule" class="form-control">
           <option value="" disabled selected>Sélectionnez un véhicule</option>
-          <option *ngFor="let vehicule of vehicules" [value]="vehicule._id">{{ vehicule.immatriculation }} - {{ vehicule.make }}</option>
+          <option *ngFor="let vehicule of vehicules" [value]="vehicule._id">{{ vehicule.immatriculation }} - {{ vehicule.make }} - {{ vehicule.model }}</option>
         </select>
       </div>
       

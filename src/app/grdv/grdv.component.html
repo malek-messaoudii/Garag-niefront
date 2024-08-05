@@ -1,0 +1,52 @@
+<app-gmenu></app-gmenu>
+
+<div class="m1">
+  Mes rendez-vous
+</div>
+<div class="m3">
+  <h6>Vous trouvez ci-dessous la liste des rendez-vous :</h6>
+</div>
+<div class="user-email-container">
+  <table class="table table-bordered table-striped" *ngIf="rdv.length > 0; else noRdvForEmail">
+    <thead>
+      <tr>
+        <th>Numéro de devis</th>
+        <th>Type</th>
+        <th>Client</th>
+        <th>Catégorie</th>
+        <th>Marque</th>
+        <th>Modéle</th>
+        <th>Immatriculation</th>
+        <th>Devis reçu</th>
+        <th>Date rdv</th>
+        <th>Détails</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rdvItem of rdv">
+        <td>{{ rdvItem.numdevis || 'non renseigné' }}</td>
+        <td>{{ rdvItem.type || 'non renseigné' }}</td>
+        <td>{{ rdvItem.nom ? rdvItem.nom + ' ' : '' }}{{ rdvItem.prenom || 'non renseigné' }}</td>
+        <td>{{ rdvItem.titrepres || 'non renseigné' }}</td>
+        <td>{{ rdvItem.vehicule?.make || 'non renseigné' }}</td>
+        <td>{{ rdvItem.vehicule?.model || 'non renseigné' }}</td>
+        <td>{{ rdvItem.vehicule?.immatriculation || 'non renseigné' }}</td>
+        <td>{{ rdvItem.devisrec ? 'Oui' : 'Non' }}</td>
+        <td>
+          <b>
+            {{ rdvItem.datesouhaite ? (rdvItem.datesouhaite | date:'shortDate') : 'non renseigné' }}
+            : {{ rdvItem.heuresouhaite || 'non renseigné' }}h
+          </b>
+        </td>
+        <td> <mat-icon>search_icon</mat-icon> </td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #noRdvForEmail>
+    <div class="text-center">
+      Aucun rendez-vous trouvé pour l'email {{ emailperso }}
+    </div>
+  </ng-template>
+</div>
+
+<app-footer></app-footer>

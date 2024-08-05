@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-const backendURL1 = 'http://localhost:4000/vehicules';
+
+
 const backendURL2 = 'http://localhost:4000/devis';
+const backendURL1 = 'http://localhost:4000/vehicules';
+const backendURL = 'http://localhost:4000/rdv';
 
 @Component({
   selector: 'app-demandes',
@@ -18,8 +21,12 @@ export class DemandesComponent implements OnInit {
   showAddForm1: boolean = false;
   showAddForm2: boolean = false;
   selectedFiles: File[] = [];
+  devisList: any[] = []; 
+  utilisateur: any[] = [];
+  selectedDevis: any;
 
-  private apiUrl = 'http://localhost:4000/rdv';
+  private apiUrl = 'http://localhost:4000/vehicules';
+
 
   constructor(
     private http: HttpClient,
@@ -34,7 +41,7 @@ export class DemandesComponent implements OnInit {
       heuresouhaite: ['', Validators.required],
       titrepres: ['', Validators.required],
       desc: [''],
-      voiturepret: [false],
+      voiturepret: ['', Validators.required],
       email: [userEmail, [Validators.required, Validators.email]]
     });
 
@@ -58,6 +65,12 @@ export class DemandesComponent implements OnInit {
   ngOnInit(): void {
     this.fetchDevis();
     this.fetchVehicles();
+    this.addrdvForm.get('vehicule')?.valueChanges.subscribe(vehiculeId => {
+      this.fetchNumDevisByVehicle(vehiculeId);
+    });
+    this.addrdvForm.get('numdevis')?.valueChanges.subscribe(() => {
+      this.onNumDevisChange();
+    });
   }
 
   onFileChange(event: any): void {
@@ -70,15 +83,173 @@ export class DemandesComponent implements OnInit {
     this.showAddForm1 = !this.showAddForm1;
   }
 
+  onNumDevisChange(): void {
+    const numdevis = this.addrdvForm.get('numdevis')?.value;
+    this.fetchpretByNumDevis(numdevis);
+    this.fetchPrestationTitreByNumDevis(numdevis);
+  }
+
+  fetchNumDevisByVehicle(vehiculeId: string): void {
+    const selectedVehicule = this.vehicules.find(v => v._id === vehiculeId);
+    
+    if (!selectedVehicule) {
+      console.error('Véhicule sélectionné non trouvé.');
+      return;
+    }
+    
+    const { make, model, immatriculation } = selectedVehicule;
+    const url = `${backendURL2}/getNumDevisByVehicule/${make}/${model}/${immatriculation}`;
+  
+    this.http.get<any[]>(url).subscribe(
+      (response) => {
+        if (response && response.length > 0) {
+          this.devisList = response;
+          this.addrdvForm.patchValue({ numdevis: this.devisList[0].numdevis });
+          this.fetchPrestationTitreByNumDevis(this.devisList[0].numdevis);
+          this.fetchpretByNumDevis(this.devisList[0].numdevis);
+        } else {
+          console.error('Aucun numéro de devis trouvé pour ce véhicule.');
+          this.toastr.error('Aucun numéro de devis trouvé pour ce véhicule.');
+        }
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Erreur lors de la récupération du numéro de devis:', error);
+        this.toastr.error('Aucune demande de devis pour cette véhicule.');
+      }
+    );
+  }
+
+  fetchPrestationTitreByNumDevis(numdevis: string): void {
+    const url = `${backendURL2}/getdevis/${numdevis}`;
+
+    this.http.get<any>(url).subscribe(
+      (response) => {
+        if (response && response['prestation'] && response['prestation']['titre']) {
+          this.addrdvForm.patchValue({ 'titrepres': response['prestation']['titre'] });
+        } else {
+          console.error('Titre de prestation non trouvé pour le numéro de devis:', numdevis);
+          this.toastr.error('Titre de prestation non trouvé pour le numéro de devis.');
+        }
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Erreur lors de la récupération du titre de prestation:', error);
+        this.toastr.error('Erreur lors de la récupération du titre de prestation.');
+      }
+    );
+  }
+
+
+  fetchpretByNumDevis(numdevis: string): void {
+    const url = `${backendURL2}/getdevis/${numdevis}`;
+
+    this.http.get<any>(url).subscribe(
+      (response) => {
+        if (response && response['voiturepret'] ) {
+          this.addrdvForm.patchValue({ 'voiturepret': response['voiturepret'] });
+        } else {
+          console.error('Voiture de prét non trouvé pour le numéro de devis:', numdevis);
+          this.toastr.error('Voiture de prét non trouvé pour le numéro de devis.');
+        }
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Erreur lors de la récupération du Voiture de prét:', error);
+        this.toastr.error('Erreur lors de la récupération du Voiture de prét.');
+      }
+    );
+  }
+  
+  
+  
+
+  
+
+  adddevis() {
+    if (this.adddevisForm.valid) {
+      const formData = new FormData();
+      formData.append('utilisateur[email]', this.adddevisForm.get('email')?.value);
+      formData.append('prestation[titre]', this.adddevisForm.get('titre')?.value);
+      formData.append('prestation[desc]', this.adddevisForm.get('desc')?.value);
+      formData.append('vehicule[make]', this.getMakeFromId(this.adddevisForm.get('vehicule')?.value));
+      formData.append('vehicule[immatriculation]', this.getImmatriculationFromId(this.adddevisForm.get('vehicule')?.value));
+      formData.append('typedemande', this.adddevisForm.get('typedemande')?.value);
+      formData.append('voiturepret', this.adddevisForm.get('voiturepret')?.value ? 'oui' : 'non');
+
+      this.selectedFiles.forEach((file: File) => {
+        formData.append('images', file, file.name);
+      });
+
+      this.http.post<any>(`${backendURL2}/adddevis2`, formData).subscribe(
+        response => {
+          this.adddevisForm.reset();
+          this.showAddForm2 = false;
+          this.toastr.success('Devis ajouté avec succès!');
+        },
+        error => {
+          this.toastr.error('Erreur lors de l\'ajout du devis.');
+          console.error('Error adding devis:', error);
+        }
+      );
+    } else {
+      this.toastr.error('Veuillez remplir tous les champs obligatoires.');
+    }
+  }
+
+  // Implémentez des méthodes d'aide pour extraire make et immatriculation de vehicules
+  getMakeFromId(vehiculeId: string): string {
+    const vehicule = this.vehicules.find(v => v._id === vehiculeId);
+    return vehicule ? vehicule.make : '';
+  }
+
+  getImmatriculationFromId(vehiculeId: string): string {
+    const vehicule = this.vehicules.find(v => v._id === vehiculeId);
+    return vehicule ? vehicule.immatriculation : '';
+  }
+
+
   addrdv(): void {
     if (this.addrdvForm.valid) {
-      this.http.post<any>(`${this.apiUrl}/addrdv`, this.addrdvForm.value).subscribe(
+      const dateSouhaitee = new Date(this.addrdvForm.get('datesouhaite')?.value);
+      const heureSouhaitee = parseInt(this.addrdvForm.get('heuresouhaite')?.value, 10);
+  
+      const formData = {
+        vehicule: {
+          make: this.getMakeFromId(this.addrdvForm.get('vehicule')?.value),
+          immatriculation: this.getImmatriculationFromId(this.addrdvForm.get('vehicule')?.value),
+          model: this.getModelFromId(this.addrdvForm.get('vehicule')?.value)
+        },
+        datesouhaite: this.addrdvForm.get('datesouhaite')?.value,
+        heuresouhaite: this.addrdvForm.get('heuresouhaite')?.value,
+        titrepres: this.addrdvForm.get('titrepres')?.value,
+        numdevis: this.addrdvForm.get('numdevis')?.value,
+        desc: this.addrdvForm.get('desc')?.value,
+        voiturepret: this.addrdvForm.get('voiturepret')?.value,
+        email: this.addrdvForm.get('email')?.value,
+      };
+  
+      // Debugging logs
+      console.log('Form Values:', this.addrdvForm.value);
+      console.log('Form Data:', formData);
+  
+      const currentDate = new Date();
+      if (dateSouhaitee <= currentDate) {
+        this.toastr.warning('Veuillez sélectionner une date future pour le rendez-vous.');
+        return;
+      }
+  
+      // Vérifier si l'heure est entre 8h et 19h
+      if (heureSouhaitee < 8 || heureSouhaitee > 19) {
+        this.toastr.info('Veuillez sélectionner une heure entre 8h et 19h pour le rendez-vous.');
+        return;
+      }
+  
+      // Toutes les validations sont passées, soumettre le formulaire
+      this.http.post<any>(`${this.apiUrl}/addrdv`, formData).subscribe(
         (newRDV) => {
           this.addrdvForm.reset();
           this.showAddForm1 = false;
           this.toastr.success('Rendez-vous ajouté avec succès');
         },
-        (error) => {
+        (error: HttpErrorResponse) => {
           this.toastr.error('Erreur lors de l\'ajout du rendez-vous');
           console.error('Error adding RDV:', error);
         }
@@ -87,7 +258,11 @@ export class DemandesComponent implements OnInit {
       this.toastr.error('Veuillez remplir tous les champs obligatoires.');
     }
   }
-
+  
+  getModelFromId(vehiculeId: string): string {
+    const vehicule = this.vehicules.find(v => v._id === vehiculeId);
+    return vehicule ? vehicule.model: '';
+  }
   fetchVehicles(): void {
     const email = localStorage.getItem('userEmail');
     if (!email) {
@@ -135,39 +310,5 @@ export class DemandesComponent implements OnInit {
 
 
 
-  adddevis(): void {
-    if (this.adddevisForm.valid) {
-      const formData = new FormData();
-      formData.append('typedemande', this.adddevisForm.get('typedemande')?.value);
-      
-      const vehicule = this.adddevisForm.get('vehicule')?.value;
-      formData.append('vehicule[make]', vehicule.make);
-      formData.append('vehicule[model]', vehicule.model);
-  
-      const prestation = this.adddevisForm.get('prestation')?.value;
-      formData.append('prestation[titre]', prestation.titre);
-      formData.append('prestation[desc]', prestation.desc);
-  
-      formData.append('voiturepret', this.adddevisForm.get('voiturepret')?.value ? 'true' : 'false');
-      formData.append('email', this.adddevisForm.get('email')?.value);
-  
-      this.selectedFiles.forEach(file => {
-        formData.append('images', file);
-      });
-  
-      this.http.post<any>(`${backendURL2}/adddevis`, formData).subscribe(
-        (newDevis) => {
-          this.adddevisForm.reset();
-          this.showAddForm2 = false;
-          this.toastr.success('Devis ajouté avec succès');
-        },
-        (error) => {
-          this.toastr.error('Erreur lors de l\'ajout du devis');
-          console.error('Error adding devis:', error);
-        }
-      );
-    } else {
-      this.toastr.error('Veuillez remplir tous les champs obligatoires.');
-    }
-  }
+ 
 }

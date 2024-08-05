@@ -73,7 +73,7 @@ export class UsersignupComponent implements OnInit {
             this.router.navigate(['/clientpro-dashboard']);
             break;
           case 'garagiste':
-            this.router.navigate(['/garagiste-dashboard']);
+            this.router.navigate(['/home2']);
             break;
           default:
             this.errorMessage = 'Rôle utilisateur non reconnu';

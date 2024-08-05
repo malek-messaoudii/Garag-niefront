@@ -17,7 +17,9 @@ export class UserinfosComponent implements OnInit {
   addrdvForm: FormGroup;
   adddevisForm: FormGroup;
   vehicules: any[] = [];
+  devisList: any[] = []; // Declare devisList here
   utilisateur: any[] = [];
+  selectedDevis: any;
   showAddForm1: boolean = false;
   showAddForm2: boolean = false;
   userData: any = {
@@ -64,7 +66,7 @@ export class UserinfosComponent implements OnInit {
       heuresouhaite: ['', Validators.required],
       titrepres: ['', Validators.required],
       desc: [''],
-      voiturepret: [false],
+      voiturepret: ['', Validators.required],
       email: [userEmail, [Validators.required, Validators.email]]
     });
     const userEmail1 = localStorage.getItem('userEmail') || '';
@@ -82,8 +84,15 @@ export class UserinfosComponent implements OnInit {
   ngOnInit(): void {
     this.fetchUserData();
     this.fetchVehicles();
-  }
+    this.addrdvForm.get('vehicule')?.valueChanges.subscribe(vehiculeId => {
+      this.fetchNumDevisByVehicle(vehiculeId);
+    });
+    this.addrdvForm.get('numdevis')?.valueChanges.subscribe(() => {
+      this.onNumDevisChange();
+    });
 
+    }
+      
   onFileChange(event: any): void {
     if (event.target.files && event.target.files.length > 0) {
       this.selectedFiles = Array.from(event.target.files);
@@ -96,7 +105,39 @@ export class UserinfosComponent implements OnInit {
 
   addrdv(): void {
     if (this.addrdvForm.valid) {
-      this.http.post<any>(`${this.apiUrl}/addrdv`, this.addrdvForm.value).subscribe(
+      const dateSouhaitee = new Date(this.addrdvForm.get('datesouhaite')?.value);
+      const heureSouhaitee = parseInt(this.addrdvForm.get('heuresouhaite')?.value, 10);
+  
+      const formData = {
+        vehicule: {
+          make: this.getMakeFromId(this.addrdvForm.get('vehicule')?.value),
+          immatriculation: this.getImmatriculationFromId(this.addrdvForm.get('vehicule')?.value),
+          model: this.getModelFromId(this.addrdvForm.get('vehicule')?.value)
+        },
+        datesouhaite: this.addrdvForm.get('datesouhaite')?.value,
+        heuresouhaite: this.addrdvForm.get('heuresouhaite')?.value,
+        titrepres: this.addrdvForm.get('titrepres')?.value,
+        numdevis: this.addrdvForm.get('numdevis')?.value,
+        desc: this.addrdvForm.get('desc')?.value,
+        voiturepret: this.addrdvForm.get('voiturepret')?.value,
+        email: this.addrdvForm.get('email')?.value,
+      };
+  
+    console.log('Form Values:', this.addrdvForm.value);
+      console.log('Form Data:', formData);
+  
+      const currentDate = new Date();
+      if (dateSouhaitee <= currentDate) {
+        this.toastr.warning('Veuillez sélectionner une date future pour le rendez-vous.');
+        return;
+      }
+  
+      if (heureSouhaitee < 8 || heureSouhaitee > 19) {
+        this.toastr.info('Veuillez sélectionner une heure entre 8h et 19h pour le rendez-vous.');
+        return;
+      }
+  
+      this.http.post<any>(`${this.apiUrl}/addrdv`, formData).subscribe(
         (newRDV) => {
           this.addrdvForm.reset();
           this.showAddForm1 = false;
@@ -111,6 +152,12 @@ export class UserinfosComponent implements OnInit {
       this.toastr.error('Veuillez remplir tous les champs obligatoires.');
     }
   }
+  
+  
+
+  
+
+  
 
   fetchUserData(): void {
     const email = localStorage.getItem('userEmail');
@@ -148,6 +195,84 @@ export class UserinfosComponent implements OnInit {
     );
   }
 
+
+  onNumDevisChange(): void {
+    const numdevis = this.addrdvForm.get('numdevis')?.value;
+    this.fetchpretByNumDevis(numdevis);
+    this.fetchPrestationTitreByNumDevis(numdevis);
+  }
+
+  fetchNumDevisByVehicle(vehiculeId: string): void {
+    const selectedVehicule = this.vehicules.find(v => v._id === vehiculeId);
+    
+    if (!selectedVehicule) {
+      console.error('Véhicule sélectionné non trouvé.');
+      return;
+    }
+    
+    const { make, model, immatriculation } = selectedVehicule;
+    const url = `${backendURL2}/getNumDevisByVehicule/${make}/${model}/${immatriculation}`;
+  
+    this.http.get<any[]>(url).subscribe(
+      (response) => {
+        if (response && response.length > 0) {
+          this.devisList = response;
+          this.addrdvForm.patchValue({ numdevis: this.devisList[0].numdevis });
+          this.fetchPrestationTitreByNumDevis(this.devisList[0].numdevis);
+          this.fetchpretByNumDevis(this.devisList[0].numdevis);
+        } else {
+          console.error('Aucun numéro de devis trouvé pour ce véhicule.');
+          this.toastr.error('Aucun numéro de devis trouvé pour ce véhicule.');
+        }
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Erreur lors de la récupération du numéro de devis:', error);
+        this.toastr.error('Aucune demande de devis pour cette véhicule.');
+      }
+    );
+  }
+
+  fetchPrestationTitreByNumDevis(numdevis: string): void {
+    const url = `${backendURL2}/getdevis/${numdevis}`;
+
+    this.http.get<any>(url).subscribe(
+      (response) => {
+        if (response && response['prestation'] && response['prestation']['titre']) {
+          this.addrdvForm.patchValue({ 'titrepres': response['prestation']['titre'] });
+        } else {
+          console.error('Titre de prestation non trouvé pour le numéro de devis:', numdevis);
+        }
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Erreur lors de la récupération du titre de prestation:', error);
+      }
+    );
+  }
+
+
+  fetchpretByNumDevis(numdevis: string): void {
+    const url = `${backendURL2}/getdevis/${numdevis}`;
+
+    this.http.get<any>(url).subscribe(
+      (response) => {
+        if (response && response['voiturepret'] ) {
+          this.addrdvForm.patchValue({ 'voiturepret': response['voiturepret'] });
+        } else {
+          console.error('Voiture de prét non trouvé pour le numéro de devis:', numdevis);
+        }
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Erreur lors de la récupération du Voiture de prét:', error);
+      }
+    );
+  }
+  
+  
+  
+
+  
+  
+  
   fetchVehicles(): void {
     const email = localStorage.getItem('userEmail');
     if (!email) {
@@ -214,6 +339,7 @@ export class UserinfosComponent implements OnInit {
     this.showAddForm2 = !this.showAddForm2;
   }
 
+
   adddevis() {
     if (this.adddevisForm.valid) {
       const formData = new FormData();
@@ -222,6 +348,7 @@ export class UserinfosComponent implements OnInit {
       formData.append('prestation[desc]', this.adddevisForm.get('desc')?.value);
       formData.append('vehicule[make]', this.getMakeFromId(this.adddevisForm.get('vehicule')?.value));
       formData.append('vehicule[immatriculation]', this.getImmatriculationFromId(this.adddevisForm.get('vehicule')?.value));
+      formData.append('vehicule[model]', this.getModelFromId(this.adddevisForm.get('vehicule')?.value));
       formData.append('typedemande', this.adddevisForm.get('typedemande')?.value);
       formData.append('voiturepret', this.adddevisForm.get('voiturepret')?.value ? 'oui' : 'non');
 
@@ -257,5 +384,9 @@ export class UserinfosComponent implements OnInit {
   getImmatriculationFromId(vehiculeId: string): string {
     const vehicule = this.vehicules.find(v => v._id === vehiculeId);
     return vehicule ? vehicule.immatriculation : '';
+  }
+  getModelFromId(vehiculeId: string): string {
+    const vehicule = this.vehicules.find(v => v._id === vehiculeId);
+    return vehicule ? vehicule.model: '';
   }
 }

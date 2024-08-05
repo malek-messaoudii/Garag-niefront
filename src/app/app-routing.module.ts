@@ -23,6 +23,18 @@ import { DemandesComponent } from './demandes/demandes.component';
 import { PromotionComponent } from './promotion/promotion.component';
 import { RdvvenirComponent } from './rdvvenir/rdvvenir.component';
 import { Devis2Component } from './devis2/devis2.component';
+import { ProfiteComponent } from './profite/profite.component';
+import { GhomeComponent } from './ghome/ghome.component';
+import { GcontactComponent } from './gcontact/gcontact.component';
+import { GstatComponent } from './gstat/gstat.component';
+import { GinfoComponent } from './ginfo/ginfo.component';
+import { GmecanComponent } from './gmecan/gmecan.component';
+import { ProgrammeComponent } from './programme/programme.component';
+import { GagendaComponent } from './gagenda/gagenda.component';
+import { GrdvComponent } from './grdv/grdv.component';
+import { GdemandeComponent } from './gdemande/gdemande.component';
+import { GintervComponent } from './ginterv/ginterv.component';
+import { VoiturepretComponent } from './voiturepret/voiturepret.component';
 
 const routerOptions: ExtraOptions = {
   scrollPositionRestoration: 'enabled',
@@ -52,6 +64,18 @@ const routes: Routes = [
   { path: 'promo' , component : PromotionComponent},
   { path: 'rdvvenir' , component : RdvvenirComponent},
   { path: 'devis2' , component : Devis2Component},
+  { path: 'profite' , component : ProfiteComponent},
+  { path: 'home2' , component : GhomeComponent},
+  { path: 'contact3' , component : GcontactComponent},
+  { path: 'stat' , component : GstatComponent},
+  { path: 'info' , component : GinfoComponent},
+  { path: 'mecan' , component : GmecanComponent},
+  { path: 'programme' , component : ProgrammeComponent},
+  { path: 'agenda' , component : GagendaComponent},
+  { path: 'grdv' , component : GrdvComponent},
+  { path: 'gdemande' , component : GdemandeComponent},
+  { path: 'intervention' , component : GintervComponent},
+  { path: 'voiturepret' , component : VoiturepretComponent},
   { path: '**' , component : NotfoundComponent}
 
 

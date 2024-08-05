@@ -1,0 +1,31 @@
+<nav class="navbar">
+    <div class="navbar-left" >
+        <a routerLink="/home2">
+        <img alt="" src="../../assets/logo2.png" class="logo" /> </a>
+    </div>
+    <div class="navbar-center">
+        <div class="navbar-item"routerLink="/home2"><a routerLink="/home2" class="l7">Accueil</a></div>
+        <div class="navbar-item"> <a routerLink="/contact3" class="l7">Contactez nous </a> </div>
+    </div>
+    <div class="navbar-right">
+        <button class="navbar-toggler" type="button" (click)="toggleMenu()">Mon compte
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
+<div class="sidebar" [class.active]="menuOpen">
+    <a class="closebtn" (click)="toggleMenu()">&times;</a>
+    <div class="a7">
+        <a routerLink="/stat">Statistiques</a>
+        <a routerLink="/info">Mes informations personnelles</a>
+        <a routerLink="/agenda">Agenda</a>
+        <a routerLink="/grdv">Mes RDV web</a>
+        <a routerLink="/gdemande">Demandes de devis</a>
+        <a routerLink="/intervention">Historique des interventions</a>
+        <a routerLink="/mecan">Liste des mécaniciens</a>
+        <a href="#">Planning</a>
+        <a href="#">Performance</a>
+        <a (click)="handleLogout()"> <p  class="a8">Déconnexion  <mat-icon class="ico">logout_icon</mat-icon> </p></a>
+    </div>
+</div>
+

@@ -1,0 +1,52 @@
+<app-gmenu></app-gmenu>
+<div class="m1">
+  Bienvenue {{ userData.nom }} {{ userData.prenom }} dans votre espace garagiste
+</div>
+
+<div class="background"> 
+  <div class="container">
+    <div class="main-content">
+      <div class="component">
+        <br>
+        <div class="dashboard-container">
+          <mat-toolbar color="primary" class="toogle">
+            <div class="calav">
+              <h1 class="calav">Statistiques</h1>
+            </div>
+          </mat-toolbar>
+
+          <div class="card">
+            <mat-card-header>
+              <mat-icon>mail</mat-icon>
+              <mat-card-title>New Messages</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="number">48</div>
+            </mat-card-content>
+          </div>
+          <div class="card">
+            <mat-card-header>
+              <mat-icon>access_time</mat-icon>
+              <mat-card-title>Current Time</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="number">{{ currentTime }}</div>
+            </mat-card-content>
+          </div>
+        </div>
+
+        <div class="charts">
+          <div class="chart-box">
+            <h2>demandes de rendez vous</h2>
+            <canvas id="usersActivityChart"></canvas>
+          </div>
+          <div class="chart-box">
+            <h2>demande de devis/rendez vous</h2>
+            <canvas id="visitorsChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

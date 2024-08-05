@@ -1,0 +1,81 @@
+<app-gmenu></app-gmenu>
+<div class="m1">
+  Bienvenue {{ userData.nom }} {{ userData.prenom }} dans votre espace client
+</div>
+
+<h2> Mon profil </h2>
+<div class="form-con">
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="custom-for">
+    <div class="form-group">
+      <label for="noms">Noms :</label>
+      <input type="text" id="noms" formControlName="noms" />
+    </div>
+    <div class="form-group">
+      <label for="nums">Numéro Siret :</label>
+      <input type="text" id="nums" formControlName="nums" />
+    </div>
+    <div class="form-group">
+      <label for="nafc">Code NAF :</label>
+      <input type="text" id="nafc" formControlName="nafc" />
+    </div>
+    <div class="form-group">
+      <label for="telephone">Téléphone :</label>
+      <input type="tel" id="telephone" formControlName="telephone" />
+    </div>
+    <div class="form-group">
+      <label for="fax">Fax :</label>
+      <input type="text" id="fax" formControlName="fax" />
+    </div>
+    <div class="form-group">
+      <label for="website">Site Web :</label>
+      <input type="text" id="website" formControlName="website" />
+    </div>
+    <div class="form-group">
+      <label for="adresse">Adresse :</label>
+      <input type="text" id="adresse" formControlName="adresse" />
+    </div>
+    <div class="form-group">
+      <label for="codep">Code Postal :</label>
+      <input type="text" id="codep" formControlName="codep" />
+    </div>
+    <div class="form-group">
+      <label for="genre">Genre :</label>
+      <input type="text" id="genre" formControlName="genre" />
+    </div>
+    <div class="form-group">
+      <label for="nom">Nom :</label>
+      <input type="text" id="nom" formControlName="nom" />
+    </div>
+    <div class="form-group">
+      <label for="prenom">Prénom :</label>
+      <input type="text" id="prenom" formControlName="prenom" />
+    </div>
+    <div class="form-group">
+      <label for="email">E-mail :</label>
+      <input type="email" id="email" formControlName="email" />
+    </div>
+    <div class="form-group">
+      <label for="id">Identifiant :</label>
+      <input type="text" id="id" formControlName="id" />
+    </div>
+    <div class="form-group">
+      <label for="motDePasse">Mot de passe :</label>
+      <input type="password" id="motDePasse" formControlName="motDePasse" />
+    </div>
+    <div class="form-group">
+      <label for="confirmerMotDePasse">Confirmer mot de passe :</label>
+      <input type="password" id="confirmerMotDePasse" formControlName="confirmerMotDePasse" />
+    </div>
+    <div class="good">
+      <button class="btn7" type="submit">Confirmer</button>
+    </div>
+  </form>
+</div>
+
+<div id="d7">
+  <button id="btn4" (click)="handleLogout()">
+    Déconnexion <mat-icon>logout_icon</mat-icon>
+  </button>
+</div>
+
+<app-footer></app-footer>

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import { VoitureService } from '../voiture.service'; // Adjust path as necessary
-
+import { VoitureService } from '../voiture.service'; 
 
 const backendURL2 = 'http://localhost:4000/devis';
 
@@ -17,9 +16,11 @@ export class VehiculeComponent implements OnInit {
   addrdvForm: FormGroup;
   updateVehiculeForm: FormGroup;
   adddevisForm: FormGroup;
-  vehicules: any[] = [];
   prestation: any[] = [];
+  vehicules: any[] = [];
+  devisList: any[] = []; 
   utilisateur: any[] = [];
+  selectedDevis: any;
   showAddForm2: boolean = false;  
   makes: string[] = [];
   models: string[] = [];
@@ -52,15 +53,16 @@ export class VehiculeComponent implements OnInit {
       energie: ['', Validators.required],
       email: [userEmail, [Validators.required, Validators.email]]
     });
+    
     this.addrdvForm = this.fb.group({
-      vehicule: [''],
-      numdevis: ['', Validators.required],
-      datesouhaite: ['', Validators.required],
-      heuresouhaite: ['', Validators.required],
-      titrepres : ['', Validators.required],
-      desc : [''],
-      voiturepret: [false],
-      email: [userEmail, [Validators.required, Validators.email]]
+        vehicule: ['', Validators.required],
+        numdevis: ['', Validators.required],
+        datesouhaite: ['', Validators.required],
+        heuresouhaite: ['', Validators.required],
+        titrepres: ['', Validators.required],
+        desc: [''],
+        voiturepret: ['', Validators.required],
+        email: [userEmail, [Validators.required, Validators.email]]
     });
     this.updateVehiculeForm = this.fb.group({
       make: ['', Validators.required],
@@ -142,6 +144,12 @@ export class VehiculeComponent implements OnInit {
   ngOnInit(): void {
     this.makes = this.carDataService.getMakes(); // Assuming this returns an array of strings
     this.fetchVehicules();
+    this.addrdvForm.get('vehicule')?.valueChanges.subscribe(vehiculeId => {
+      this.fetchNumDevisByVehicle(vehiculeId);
+    });
+    this.addrdvForm.get('numdevis')?.valueChanges.subscribe(() => {
+      this.onNumDevisChange();
+    });
   }
 
   fetchVehicules(): void {
@@ -219,6 +227,86 @@ export class VehiculeComponent implements OnInit {
     this.showAddForm2 = !this.showAddForm2;
   }
 
+  onNumDevisChange(): void {
+    const numdevis = this.addrdvForm.get('numdevis')?.value;
+    this.fetchpretByNumDevis(numdevis);
+    this.fetchPrestationTitreByNumDevis(numdevis);
+  }
+
+  fetchNumDevisByVehicle(vehiculeId: string): void {
+    const selectedVehicule = this.vehicules.find(v => v._id === vehiculeId);
+    
+    if (!selectedVehicule) {
+      console.error('Véhicule sélectionné non trouvé.');
+      return;
+    }
+    
+    const { make, model, immatriculation } = selectedVehicule;
+    const url = `${backendURL2}/getNumDevisByVehicule/${make}/${model}/${immatriculation}`;
+  
+    this.http.get<any[]>(url).subscribe(
+      (response) => {
+        if (response && response.length > 0) {
+          this.devisList = response;
+          this.addrdvForm.patchValue({ numdevis: this.devisList[0].numdevis });
+          this.fetchPrestationTitreByNumDevis(this.devisList[0].numdevis);
+          this.fetchpretByNumDevis(this.devisList[0].numdevis);
+        } else {
+          console.error('Aucun numéro de devis trouvé pour ce véhicule.');
+          this.toastr.error('Aucun numéro de devis trouvé pour ce véhicule.');
+        }
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Erreur lors de la récupération du numéro de devis:', error);
+        this.toastr.error('Aucune demande de devis pour cette véhicule.');
+      }
+    );
+  }
+
+  fetchPrestationTitreByNumDevis(numdevis: string): void {
+    const url = `${backendURL2}/getdevis/${numdevis}`;
+
+    this.http.get<any>(url).subscribe(
+      (response) => {
+        if (response && response['prestation'] && response['prestation']['titre']) {
+          this.addrdvForm.patchValue({ 'titrepres': response['prestation']['titre'] });
+        } else {
+          console.error('Titre de prestation non trouvé pour le numéro de devis:', numdevis);
+          this.toastr.error('Titre de prestation non trouvé pour le numéro de devis.');
+        }
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Erreur lors de la récupération du titre de prestation:', error);
+        this.toastr.error('Erreur lors de la récupération du titre de prestation.');
+      }
+    );
+  }
+
+
+  fetchpretByNumDevis(numdevis: string): void {
+    const url = `${backendURL2}/getdevis/${numdevis}`;
+
+    this.http.get<any>(url).subscribe(
+      (response) => {
+        if (response && response['voiturepret'] ) {
+          this.addrdvForm.patchValue({ 'voiturepret': response['voiturepret'] });
+        } else {
+          console.error('Voiture de prét non trouvé pour le numéro de devis:', numdevis);
+          this.toastr.error('Voiture de prét non trouvé pour le numéro de devis.');
+        }
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Erreur lors de la récupération du Voiture de prét:', error);
+        this.toastr.error('Erreur lors de la récupération du Voiture de prét.');
+      }
+    );
+  }
+  
+  
+  
+
+  
+
   adddevis() {
     if (this.adddevisForm.valid) {
       const formData = new FormData();
@@ -272,13 +360,48 @@ export class VehiculeComponent implements OnInit {
   }
   addrdv(): void {
     if (this.addrdvForm.valid) {
-      this.http.post<any>(`${this.backendUrl}/addrdv`, this.addrdvForm.value).subscribe(
+      const dateSouhaitee = new Date(this.addrdvForm.get('datesouhaite')?.value);
+      const heureSouhaitee = parseInt(this.addrdvForm.get('heuresouhaite')?.value, 10);
+  
+      const formData = {
+        vehicule: {
+          make: this.getMakeFromId(this.addrdvForm.get('vehicule')?.value),
+          immatriculation: this.getImmatriculationFromId(this.addrdvForm.get('vehicule')?.value),
+          model: this.getModelFromId(this.addrdvForm.get('vehicule')?.value)
+        },
+        datesouhaite: this.addrdvForm.get('datesouhaite')?.value,
+        heuresouhaite: this.addrdvForm.get('heuresouhaite')?.value,
+        titrepres: this.addrdvForm.get('titrepres')?.value,
+        numdevis: this.addrdvForm.get('numdevis')?.value,
+        desc: this.addrdvForm.get('desc')?.value,
+        voiturepret: this.addrdvForm.get('voiturepret')?.value,
+        email: this.addrdvForm.get('email')?.value,
+      };
+  
+      // Debugging logs
+      console.log('Form Values:', this.addrdvForm.value);
+      console.log('Form Data:', formData);
+  
+      const currentDate = new Date();
+      if (dateSouhaitee <= currentDate) {
+        this.toastr.warning('Veuillez sélectionner une date future pour le rendez-vous.');
+        return;
+      }
+  
+      // Vérifier si l'heure est entre 8h et 19h
+      if (heureSouhaitee < 8 || heureSouhaitee > 19) {
+        this.toastr.info('Veuillez sélectionner une heure entre 8h et 19h pour le rendez-vous.');
+        return;
+      }
+  
+      // Toutes les validations sont passées, soumettre le formulaire
+      this.http.post<any>(`${this.apiUrl}/addrdv`, formData).subscribe(
         (newRDV) => {
           this.addrdvForm.reset();
           this.showAddForm1 = false;
           this.toastr.success('Rendez-vous ajouté avec succès');
         },
-        (error) => {
+        (error: HttpErrorResponse) => {
           this.toastr.error('Erreur lors de l\'ajout du rendez-vous');
           console.error('Error adding RDV:', error);
         }
@@ -286,5 +409,10 @@ export class VehiculeComponent implements OnInit {
     } else {
       this.toastr.error('Veuillez remplir tous les champs obligatoires.');
     }
+  }
+  
+  getModelFromId(vehiculeId: string): string {
+    const vehicule = this.vehicules.find(v => v._id === vehiculeId);
+    return vehicule ? vehicule.model: '';
   }
 }
